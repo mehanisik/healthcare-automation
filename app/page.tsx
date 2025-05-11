@@ -1,9 +1,23 @@
-import { Button } from '@/components/ui/button';
+import Contact from '@/components/layout/contact';
+import FeaturesSection from '@/components/layout/feature';
+import FooterSection from '@/components/layout/footer';
+import Header from '@/components/layout/header';
+import HeroSection from '@/components/layout/hero-section';
+import SolutionSection from '@/components/layout/solutions-showcase';
+import TestimonialSection from '@/components/layout/testimonial';
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <Button variant="default">Click me</Button>
+    <div className="relative w-full min-h-screen bg-background">
+      <Header />
+      <main className="flex flex-col gap-16" role="main">
+        <HeroSection />
+        <FeaturesSection />
+        <SolutionSection />
+        <TestimonialSection />
+        <Contact />
+      </main>
+      <FooterSection />
     </div>
   );
 }

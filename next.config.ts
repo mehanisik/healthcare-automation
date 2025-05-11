@@ -7,6 +7,13 @@ const nextConfig: NextConfig = {
   },
   poweredByHeader: false,
   reactStrictMode: true,
+  images: {
+    remotePatterns: [
+      {
+        hostname: 'shadcnblocks.com',
+      },
+    ],
+  },
 };
 
 const bundleAnalyzer = withBundleAnalyzer({
