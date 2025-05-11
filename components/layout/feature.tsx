@@ -1,6 +1,6 @@
-import { ArrowRight, BarChart, CheckCircle, Shield, Users } from 'lucide-react';
-import Link from 'next/link';
-import SectionContainer from './section-container';
+import { ArrowRight, BarChart, CheckCircle, Shield, Users } from 'lucide-react'
+import Link from 'next/link'
+import SectionContainer from './section-container'
 
 export default function FeatureSection() {
   const uniqueSellingPoints = [
@@ -29,7 +29,7 @@ export default function FeatureSection() {
         'We take time to learn your practice and work closely with you so that we succeed together as a team.',
       icon: BarChart,
     },
-  ];
+  ]
 
   return (
     <SectionContainer id="services" background="gradient">
@@ -147,5 +147,5 @@ export default function FeatureSection() {
         </div>
       </div>
     </SectionContainer>
-  );
+  )
 }

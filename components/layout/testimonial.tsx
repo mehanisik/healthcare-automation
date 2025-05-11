@@ -1,7 +1,7 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { QuoteIcon } from 'lucide-react';
-import Image from 'next/image';
-import SectionContainer from './section-container';
+import { Card, CardContent } from '@/components/ui/card'
+import { QuoteIcon } from 'lucide-react'
+import Image from 'next/image'
+import SectionContainer from './section-container'
 
 const testimonials = [
   {
@@ -25,7 +25,7 @@ const testimonials = [
     author: 'Dr. Popkow',
     role: 'Family Physician',
   },
-];
+]
 
 export default function TestimonialSection() {
   return (
@@ -102,5 +102,5 @@ export default function TestimonialSection() {
         </div>
       </div>
     </SectionContainer>
-  );
+  )
 }

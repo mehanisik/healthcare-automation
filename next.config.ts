@@ -1,5 +1,5 @@
-import type { NextConfig } from 'next';
-import withBundleAnalyzer from '@next/bundle-analyzer';
+import type { NextConfig } from 'next'
+import withBundleAnalyzer from '@next/bundle-analyzer'
 
 const nextConfig: NextConfig = {
   eslint: {
@@ -14,10 +14,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-};
+}
 
 const bundleAnalyzer = withBundleAnalyzer({
+  // eslint-disable-next-line node/prefer-global/process
   enabled: process.env.ANALYZE === 'true',
-});
+})
 
-export default bundleAnalyzer(nextConfig);
+export default bundleAnalyzer(nextConfig)

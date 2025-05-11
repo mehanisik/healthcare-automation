@@ -1,10 +1,10 @@
-import Contact from '@/components/layout/contact';
-import FeaturesSection from '@/components/layout/feature';
-import FooterSection from '@/components/layout/footer';
-import Header from '@/components/layout/header';
-import HeroSection from '@/components/layout/hero-section';
-import SolutionSection from '@/components/layout/solutions-showcase';
-import TestimonialSection from '@/components/layout/testimonial';
+import Contact from '@/components/layout/contact'
+import FeaturesSection from '@/components/layout/feature'
+import FooterSection from '@/components/layout/footer'
+import Header from '@/components/layout/header'
+import HeroSection from '@/components/layout/hero-section'
+import SolutionSection from '@/components/layout/solutions-showcase'
+import TestimonialSection from '@/components/layout/testimonial'
 
 export default function Home() {
   return (
@@ -19,5 +19,5 @@ export default function Home() {
       </main>
       <FooterSection />
     </div>
-  );
+  )
 }

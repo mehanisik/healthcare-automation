@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from 'next/link'
 
 const links = [
   {
@@ -45,7 +45,7 @@ const links = [
       },
     ],
   },
-];
+]
 
 export default function FooterSection() {
   return (
@@ -116,5 +116,5 @@ export default function FooterSection() {
         </div>
       </div>
     </footer>
-  );
+  )
 }

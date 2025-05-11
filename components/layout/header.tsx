@@ -1,17 +1,17 @@
-'use client';
+'use client'
 
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button'
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from '@/components/ui/navigation-menu';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Heart, Menu } from 'lucide-react';
-import Link from 'next/link';
+} from '@/components/ui/navigation-menu'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { Heart, Menu } from 'lucide-react'
+import Link from 'next/link'
 
-const Header = () => {
+function Header() {
   const navLinks = [
     { id: 'home', label: 'Home', href: '#home' },
     { id: 'about', label: 'About', href: '#about' },
@@ -19,15 +19,15 @@ const Header = () => {
     { id: 'clients', label: 'Clients', href: '#clients' },
     { id: 'news', label: 'News', href: '#news' },
     { id: 'contact', label: 'Contact', href: '#contact' },
-  ];
+  ]
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    const element = document.querySelector(href);
+    e.preventDefault()
+    const element = document.querySelector(href)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: 'smooth' })
     }
-  };
+  }
 
   return (
     <nav className="max-w-5xl sticky top-0 z-50 mx-auto h-14 mt-4 bg-background border dark:border-slate-700/70 rounded-full">
@@ -85,7 +85,7 @@ const Header = () => {
         </div>
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

@@ -1,8 +1,8 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowRight, Building, FileCheck, FileText, LineChart } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import SectionContainer from './section-container';
+import { Card, CardContent } from '@/components/ui/card'
+import { ArrowRight, Building, FileCheck, FileText, LineChart } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import SectionContainer from './section-container'
 
 const services = [
   {
@@ -33,7 +33,7 @@ const services = [
       'Guidance in setting up your medical practice and establishing contracts with payors, ensuring you get the best possible terms.',
     icon: FileCheck,
   },
-];
+]
 
 export default function SolutionsShowcase() {
   return (
@@ -133,5 +133,5 @@ export default function SolutionsShowcase() {
         </div>
       </div>
     </SectionContainer>
-  );
+  )
 }

@@ -1,15 +1,9 @@
-import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { Button } from '@/components/ui/button';
-import Image from 'next/image';
-import Link from 'next/link';
-import SectionContainer from './section-container';
-
-const images = {
-  first: '/placeholder.svg?height=400&width=400',
-  second: '/placeholder.svg?height=400&width=600',
-  third: '/placeholder.svg?height=400&width=600',
-  fourth: '/placeholder.svg?height=800&width=400',
-};
+import { AspectRatio } from '@/components/ui/aspect-ratio'
+import { Button } from '@/components/ui/button'
+import { PlaceholderImage } from '@/components/ui/placeholder-image'
+import Image from 'next/image'
+import Link from 'next/link'
+import SectionContainer from './section-container'
 
 export default function HeroSection() {
   return (
@@ -54,46 +48,26 @@ export default function HeroSection() {
               <AspectRatio ratio={1 / 1} className="h-full w-full">
                 <div className="grid h-full w-full grid-cols-2 grid-rows-2 gap-[3.5%]">
                   <div className="overflow-hidden rounded-[5.2%] border border-muted bg-muted">
-                    <Image
-                      src={images.first || '/placeholder.svg'}
-                      alt="Medical billing dashboard"
-                      fill
-                      className="object-cover object-center"
-                    />
+                    <PlaceholderImage width={400} height={400} text="Medical Billing" />
                   </div>
                   <div className="relative overflow-hidden rounded-[5.2%] border border-muted bg-muted">
                     <div className="absolute top-1/2 left-[5%] w-[110%] max-w-[25rem] -translate-y-1/2 overflow-hidden rounded-md">
                       <AspectRatio ratio={1.739130435 / 1}>
-                        <Image
-                          src={images.second || '/placeholder.svg'}
-                          alt="Healthcare analytics"
-                          fill
-                          className="object-cover object-center"
-                        />
+                        <PlaceholderImage width={600} height={400} text="Healthcare Analytics" />
                       </AspectRatio>
                     </div>
                   </div>
                   <div className="relative overflow-hidden rounded-[5.2%] border border-muted bg-muted">
                     <div className="absolute top-[9%] left-[9%] w-[200%] max-w-[37.5rem] overflow-hidden rounded-md">
                       <AspectRatio ratio={1.6 / 1}>
-                        <Image
-                          src={images.third || '/placeholder.svg'}
-                          alt="Patient management"
-                          fill
-                          className="object-cover object-center"
-                        />
+                        <PlaceholderImage width={600} height={400} text="Patient Management" />
                       </AspectRatio>
                     </div>
                   </div>
                   <div className="relative overflow-hidden rounded-[5.2%] border border-muted bg-muted">
                     <div className="relative top-[12%] left-[50%] w-[70%] max-w-[17.5rem] -translate-x-[50%]">
                       <AspectRatio ratio={0.52 / 1}>
-                        <Image
-                          src={images.fourth || '/placeholder.svg'}
-                          alt="Mobile healthcare app"
-                          fill
-                          className="absolute z-10 rounded-[16%]"
-                        />
+                        <PlaceholderImage width={400} height={800} text="Mobile App" />
                       </AspectRatio>
                     </div>
                   </div>
@@ -104,5 +78,5 @@ export default function HeroSection() {
         </div>
       </div>
     </SectionContainer>
-  );
+  )
 }

@@ -1,19 +1,19 @@
-import type { ReactNode } from 'react';
-import { cn } from '@/lib/utils';
+import type { ReactNode } from 'react'
+import { cn } from '@/lib/utils'
 
-type SectionContainerProps = {
-  children: ReactNode;
-  className?: string;
-  background?: 'default' | 'muted' | 'gradient';
-  id?: string;
-};
+interface SectionContainerProps {
+  children: ReactNode
+  className?: string
+  background?: 'default' | 'muted' | 'gradient'
+  id?: string
+}
 
 export default function SectionContainer({ children, className, background = 'default', id }: SectionContainerProps) {
   const backgroundStyles = {
     default: 'bg-background',
     muted: 'bg-muted/30',
     gradient: 'bg-gradient-to-b from-background to-muted/30',
-  };
+  }
 
   return (
     <section id={id} className={cn('w-full py-16 md:py-24', backgroundStyles[background], className)}>
@@ -21,5 +21,5 @@ export default function SectionContainer({ children, className, background = 'de
         {children}
       </div>
     </section>
-  );
+  )
 }
