@@ -1,23 +1,28 @@
-import Contact from '@/components/layout/contact'
-import FeaturesSection from '@/components/layout/feature'
-import FooterSection from '@/components/layout/footer'
-import Header from '@/components/layout/header'
-import HeroSection from '@/components/layout/hero-section'
-import SolutionSection from '@/components/layout/solutions-showcase'
-import TestimonialSection from '@/components/layout/testimonial'
+import type { NextPage } from 'next';
+import AboutSection from 'components/about';
+import ContactSection from 'components/contact';
+import FeaturesSection from 'components/feature';
+import FooterSection from 'components/footer';
+import Header from 'components/header';
+import HeroSection from 'components/hero-section';
+import SolutionSection from 'components/solutions-showcase';
+import TestimonialSection from 'components/testimonial';
 
-export default function Home() {
+const Home: NextPage = () => {
   return (
-    <div className="relative w-full min-h-screen bg-background">
+    <>
       <Header />
-      <main className="flex flex-col gap-16" role="main">
+      <main className="flex flex-col gap-16 w-full overflow-hidden" aria-label="Main content">
         <HeroSection />
         <FeaturesSection />
         <SolutionSection />
+        <AboutSection />
         <TestimonialSection />
-        <Contact />
+        <ContactSection />
+        <FooterSection />
       </main>
-      <FooterSection />
-    </div>
-  )
-}
+    </>
+  );
+};
+
+export default Home;

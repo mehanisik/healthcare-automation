@@ -1,27 +1,59 @@
-import antfu from '@antfu/eslint-config'
-import nextPlugin from '@next/eslint-plugin-next'
-import jsxA11y from 'eslint-plugin-jsx-a11y'
+import antfu from '@antfu/eslint-config';
+// @ts-ignore
+import nextPlugin from '@next/eslint-plugin-next';
+// @ts-ignore
+import jsxA11y from 'eslint-plugin-jsx-a11y';
 
 export default antfu(
   {
-    ignores: ['.next/**', 'node_modules/**', 'dist/**'],
+    react: true,
+    typescript: true,
+
+    // Configuration preferences
+    lessOpinionated: true,
+    isInEditor: false,
+
+    // Code style
+    stylistic: {
+      semi: true,
+    },
+
+    // Format settings
+    formatters: {
+      css: true,
+    },
+
+    ignores: [
+      'migrations/**/*',
+      'node_modules/**/*',
+      'public/**/*',
+      'components/ui/**/*',
+    ],
   },
+  // --- Next.js Specific Rules ---
   {
-    files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
       '@next/next': nextPlugin,
-      'jsx-a11y': jsxA11y,
     },
     rules: {
-      '@next/next/no-html-link-for-pages': 'off',
-      '@next/next/no-img-element': 'off',
-      'jsx-a11y/alt-text': 'warn',
-      'jsx-a11y/anchor-has-content': 'warn',
-      'jsx-a11y/anchor-is-valid': 'warn',
-      'jsx-a11y/aria-props': 'warn',
-      'jsx-a11y/aria-role': 'warn',
-      'jsx-a11y/role-has-required-aria-props': 'warn',
-      'jsx-a11y/role-supports-aria-props': 'warn',
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs['core-web-vitals'].rules,
     },
   },
-)
+  // --- Accessibility Rules ---
+  jsxA11y.flatConfigs.recommended,
+  // --- Testing Rules ---
+
+  // --- Custom Rule Overrides ---
+  {
+    rules: {
+      'antfu/no-top-level-await': 'off', // Allow top-level await
+      'style/brace-style': ['error', '1tbs'], // Use the default brace style
+      'ts/consistent-type-definitions': ['error', 'type'], // Use `type` instead of `interface`
+      'react/prefer-destructuring-assignment': 'off', // Vscode doesn't support automatically destructuring, it's a pain to add a new variable
+      'node/prefer-global/process': 'off', // Allow using `process.env`
+      'test/padding-around-all': 'error', // Add padding in test files
+      'test/prefer-lowercase-title': 'off', // Allow using uppercase titles in test titles
+    },
+  },
+);

@@ -1,4 +1,4 @@
-import type { NavItem } from '../types'
+import type { NavItem } from '../types';
 
 export const mainNavItems: NavItem[] = [
   {
@@ -17,7 +17,7 @@ export const mainNavItems: NavItem[] = [
     label: 'Contact',
     href: '#contact',
   },
-]
+];
 
 export const footerNavItems: NavItem[] = [
   {
@@ -32,4 +32,4 @@ export const footerNavItems: NavItem[] = [
     label: 'Documentation',
     href: '/docs',
   },
-]
+];

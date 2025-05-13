@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+Thumbs.db
 
 # debug
 npm-debug.log*
@@ -30,8 +31,14 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# local env files
+.env*.local
+
+# Sentry Config File
+.env.sentry-build-plugin
+
+# local folder
+local
 
 # vercel
 .vercel
@@ -40,5 +47,16 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-#eslint cache
-.eslintcache
+# Database
+*.db
+
+# storybook
+storybook-static
+*storybook.log
+
+# playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+.cursorrules
