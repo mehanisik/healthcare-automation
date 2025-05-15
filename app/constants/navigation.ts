@@ -33,3 +33,12 @@ export const footerNavItems: NavItem[] = [
     href: '/docs',
   },
 ];
+
+export const navLinks = [
+  { id: 'hero', label: 'Home', href: '#hero' },
+  { id: 'services', label: 'Services', href: '#services' },
+  { id: 'solutions', label: 'Solutions', href: '#solutions' },
+  { id: 'about-us', label: 'About Us', href: '#about-us' },
+  { id: 'clients', label: 'Clients', href: '#clients' },
+  { id: 'contact', label: 'Contact', href: '#contact' },
+];

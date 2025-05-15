@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import { ThemeProvider } from 'components/theme-provider';
 import { fontGeist, fontHeading, fontSans, fontUrban } from 'fonts';
 import { Toaster } from '@/components/ui/sonner';
@@ -89,7 +90,7 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>): Rea
       </head>
       <body
         className={cn(
-          'bg-background min-h-screen font-sans text-[#003a43] dark:text-white antialiased',
+          'bg-background min-h-screen font-sans text-foreground antialiased',
           fontSans.variable,
           fontUrban.variable,
           fontHeading.variable,
@@ -103,6 +104,7 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>): Rea
           disableTransitionOnChange
         >
           <Toaster />
+          <Analytics />
           {children}
         </ThemeProvider>
       </body>

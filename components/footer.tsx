@@ -1,55 +1,9 @@
+import type { Data } from '@/app/types';
 import Link from 'next/link';
 
-const links = [
-  {
-    id: 'services',
-    group: 'Services',
-    items: [
-      { id: 'billing', title: 'Medical Billing & Coding', href: '/services#billing' },
-      { id: 'out-of-network', title: 'Out of Network Billing', href: '/services#out-of-network' },
-      { id: 'appeals', title: 'Appeals & Payor Negotiations', href: '/services#appeals' },
-      { id: 'management', title: 'Practice Management', href: '/services#management' },
-      { id: 'strategy', title: 'Business Strategy', href: '/services#strategy' },
-      { id: 'setup', title: 'Practice Setup', href: '/services#setup' },
-      { id: 'contracting', title: 'Payor Contracting', href: '/services#contracting' },
-    ],
-  },
-  {
-    id: 'company',
-    group: 'Company',
-    items: [
-      { id: 'about', title: 'About', href: '/about' },
-      { id: 'team', title: 'Team', href: '/about#team' },
-      { id: 'testimonials', title: 'Testimonials', href: '/#testimonials' },
-      { id: 'contact', title: 'Contact', href: '/contact' },
-    ],
-  },
-  {
-    id: 'resources',
-    group: 'Resources',
-    items: [
-      {
-        id: 'telemedicine',
-        title: 'How to Code Telemedicine',
-        href: 'https://www.giritconsulting.com/news/2020/3/24/how-to-code-telemedicine',
-      },
-      {
-        id: 'responsibilities',
-        title: 'Telehealth Patient Responsibilities',
-        href: 'https://www.giritconsulting.com/news/2017/6/4/coming-soon',
-      },
-      {
-        id: 'guidelines',
-        title: 'Medicare Telehealth Guidelines',
-        href: 'https://www.giritconsulting.com/news/2020/3/24/medicare-telehealth-guidelines-during-coronovirus-outbreal',
-      },
-    ],
-  },
-];
-
-export default function FooterSection() {
+export default function FooterSection({ footerLinks, officeInfo }: { footerLinks: Data['footerLinks']; officeInfo: Data['companyInfo']; navigation: Data['navigation'] }) {
   return (
-    <footer className="border-t bg-[#004952] text-[#f8f3eb] dark:bg-[#262626] pt-16">
+    <footer className="bg-secondary text-white pt-16 dark:bg-[#121212] dark:border-t dark:border-border">
       <div className="mx-auto max-w-6xl px-4">
         <div className="grid gap-12 md:grid-cols-4">
           <div className="md:col-span-1">
@@ -58,25 +12,25 @@ export default function FooterSection() {
               aria-label="go home"
               className="block size-fit text-xl font-bold"
             >
-              GIRIT CONSULTING
+              {officeInfo.name}
             </Link>
             <p className=" mt-4">
-              Helping medical practices achieve their financial goals with comprehensive healthcare
-              management solutions since 2005.
+              {officeInfo.description}
             </p>
             <div className="mt-6">
               <p className="font-medium">Office Hours</p>
-              <p className="">Monday - Friday: 8:30 AM - 5:00 PM</p>
+              <p className="">{officeInfo.hours}</p>
             </div>
             <div className="mt-4">
               <p className="font-medium">Location</p>
-              <p className="">3470 Wilshire Blvd. Suite 616</p>
-              <p className="">Los Angeles, CA 90010</p>
+              {officeInfo.address.map((line: string) => (
+                <p className="" key={line}>{line}</p>
+              ))}
             </div>
           </div>
 
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 md:col-span-3">
-            {links.map(link => (
+            {footerLinks.map(link => (
               <div key={link.id} className="space-y-4 text-sm">
                 <span className="block font-medium">{link.group}</span>
                 {link.items.map(item => (
@@ -95,9 +49,7 @@ export default function FooterSection() {
         <div className="border-border mt-12 flex flex-wrap items-end justify-between gap-6 border-t py-6">
           <span className=" order-last block text-center text-sm md:order-first">
             ©
-            {' '}
             {new Date().getFullYear()}
-            {' '}
             Girit Consulting, Inc. All rights reserved
           </span>
           <div className="order-first flex flex-wrap justify-center gap-6 text-sm md:order-last">
