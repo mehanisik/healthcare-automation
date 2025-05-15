@@ -91,9 +91,6 @@ export default function HeroSection({ companyInfo }: { companyInfo: Data['compan
             alt="Healthcare Professional"
             fill
             className="object-cover rounded-2xl transition-transform duration-300 hover:scale-105"
-            priority
-            fetchPriority="high"
-            loading="eager"
           />
         </motion.div>
       </div>
