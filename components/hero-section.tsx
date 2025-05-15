@@ -87,9 +87,11 @@ export default function HeroSection({ companyInfo }: { companyInfo: Data['compan
           className="w-full lg:flex-1 rounded-2xl p-2 sm:p-4 h-[300px] sm:h-[350px] md:h-[400px] lg:h-[500px] relative overflow-hidden"
         >
           <Image
-            src="/hero2.jpg"
+            src="/hero-image.jpg"
             alt="Healthcare Professional"
             fill
+            priority
+            fetchPriority="high"
             className="object-cover rounded-2xl transition-transform duration-300 hover:scale-105"
           />
         </motion.div>
