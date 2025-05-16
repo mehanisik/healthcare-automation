@@ -1,7 +1,13 @@
 import type { Data } from '@/app/types';
 import Link from 'next/link';
 
-export default function FooterSection({ footerLinks, officeInfo }: { footerLinks: Data['footerLinks']; officeInfo: Data['companyInfo']; navigation: Data['navigation'] }) {
+type FooterSectionProps = {
+  readonly footerLinks: Data['footerLinks'];
+  readonly officeInfo: Data['companyInfo'];
+  readonly navigation: Data['navigation'];
+};
+
+export default function FooterSection({ footerLinks, officeInfo }: FooterSectionProps) {
   return (
     <footer className="bg-secondary text-white pt-16 dark:bg-[#121212] dark:border-t dark:border-border">
       <div className="mx-auto max-w-6xl px-4">

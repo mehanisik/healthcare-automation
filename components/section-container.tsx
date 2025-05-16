@@ -2,15 +2,14 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 type SectionContainerProps = {
-  id?: string;
-  ref?: React.RefObject<HTMLDivElement>;
-  className?: string;
-  titleChip?: string;
-  mainTitle?: string;
-  titleDescription?: string;
-  children: React.ReactNode;
-  secondaryClassName?: string;
-
+  readonly id?: string;
+  readonly ref?: React.RefObject<HTMLDivElement>;
+  readonly className?: string;
+  readonly titleChip?: string;
+  readonly mainTitle?: string;
+  readonly titleDescription?: string;
+  readonly children: React.ReactNode;
+  readonly secondaryClassName?: string;
 };
 
 const SectionContainer: React.FC<SectionContainerProps> = ({
@@ -22,7 +21,7 @@ const SectionContainer: React.FC<SectionContainerProps> = ({
   titleDescription,
   children,
   secondaryClassName,
-}) => {
+}): React.ReactElement => {
   return (
     <section
       id={id}
@@ -33,19 +32,19 @@ const SectionContainer: React.FC<SectionContainerProps> = ({
         {(titleChip || mainTitle || titleDescription) && (
           <div className="mb-10 space-y-4 text-center">
             {titleChip && (
-              <div className="inline-flex items-center justify-center rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5">
-                <span className="text-primary dark:text-primary-foreground text-sm font-medium">
+              <div className="inline-flex items-center justify-center rounded-full border border-primary/20 bg-primary/10 dark:border-primary/20 dark:bg-primary/10 dark:text-white px-4 py-1.5">
+                <span className="text-primary dark:text-white text-sm font-medium">
                   {titleChip}
                 </span>
               </div>
             )}
             {mainTitle && (
-              <h2 className="text-foreground text-3xl font-bold md:text-4xl">
+              <h2 className="text-foreground dark:text-foreground text-3xl font-bold md:text-4xl">
                 {mainTitle}
               </h2>
             )}
             {titleDescription && (
-              <p className="text-muted-foreground mx-auto max-w-3xl lg:text-lg">
+              <p className="text-muted-foreground dark:text-muted-foreground mx-auto max-w-3xl lg:text-lg">
                 {titleDescription}
               </p>
             )}

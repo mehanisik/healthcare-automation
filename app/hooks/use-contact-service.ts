@@ -1,12 +1,27 @@
+import type { UseFormReturn } from 'react-hook-form';
 import type { ContactFormData } from '../schema/contact-schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { contactFormSchema } from '../schema/contact-schema';
 
-function useContactService() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+type SubmitStatus = 'idle' | 'success' | 'error';
+
+type ContactServiceReturn = {
+  readonly register: UseFormReturn<ContactFormData>['register'];
+  readonly handleSubmit: UseFormReturn<ContactFormData>['handleSubmit'];
+  readonly errors: UseFormReturn<ContactFormData>['formState']['errors'];
+  readonly reset: UseFormReturn<ContactFormData>['reset'];
+  readonly isSubmitting: boolean;
+  readonly submitStatus: SubmitStatus;
+  readonly handleContactFormSubmit: (data: ContactFormData) => Promise<void>;
+  readonly control: UseFormReturn<ContactFormData>['control'];
+};
+
+function useContactService(): ContactServiceReturn {
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('idle');
 
   const {
     register,
@@ -20,8 +35,7 @@ function useContactService() {
 
   const handleContactFormSubmit = async (
     data: ContactFormData,
-    toast: any,
-  ) => {
+  ): Promise<void> => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
     try {

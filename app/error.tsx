@@ -5,8 +5,8 @@ import * as React from 'react';
 import { Button } from '@/components/ui/button';
 
 type ErrorProps = {
-  error: Error & { digest?: string };
-  reset: () => void;
+  readonly error: Error & { readonly digest?: string };
+  readonly reset: () => void;
 };
 
 export default function Error({ error, reset }: ErrorProps): React.ReactElement {

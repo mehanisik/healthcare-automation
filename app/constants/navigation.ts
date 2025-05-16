@@ -1,6 +1,6 @@
 import type { NavItem } from '../types';
 
-export const mainNavItems: NavItem[] = [
+export const mainNavItems: readonly NavItem[] = [
   {
     label: 'Features',
     href: '#features',
@@ -17,9 +17,9 @@ export const mainNavItems: NavItem[] = [
     label: 'Contact',
     href: '#contact',
   },
-];
+] as const;
 
-export const footerNavItems: NavItem[] = [
+export const footerNavItems: readonly NavItem[] = [
   {
     label: 'Privacy Policy',
     href: '/privacy',
@@ -32,7 +32,7 @@ export const footerNavItems: NavItem[] = [
     label: 'Documentation',
     href: '/docs',
   },
-];
+] as const;
 
 export const navLinks = [
   { id: 'hero', label: 'Home', href: '#hero' },
@@ -41,4 +41,4 @@ export const navLinks = [
   { id: 'about-us', label: 'About Us', href: '#about-us' },
   { id: 'clients', label: 'Clients', href: '#clients' },
   { id: 'contact', label: 'Contact', href: '#contact' },
-];
+] as const;

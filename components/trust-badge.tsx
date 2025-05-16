@@ -1,6 +1,11 @@
 import { motion } from 'framer-motion';
 
-export const TrustBadge: React.FC<{ icon: React.ReactNode; text: string }> = ({ icon, text }) => (
+type TrustBadgeProps = {
+  readonly icon: React.ReactNode;
+  readonly text: string;
+};
+
+export const TrustBadge: React.FC<TrustBadgeProps> = ({ icon, text }) => (
   <motion.div
     whileHover={{ scale: 1.05 }}
     transition={{ duration: 0.2 }}

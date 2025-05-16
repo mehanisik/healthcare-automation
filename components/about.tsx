@@ -6,7 +6,11 @@ import BackgroundPattern from './background-pattern';
 import SectionContainer from './section-container';
 import { useSectionAnimation } from './ui/section-animation';
 
-export default function AboutSection({ team }: { team: Data['team'] }) {
+type AboutSectionProps = {
+  readonly team: Data['team'];
+};
+
+export default function AboutSection({ team }: AboutSectionProps) {
   const animation = useSectionAnimation();
 
   return (

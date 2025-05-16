@@ -7,9 +7,12 @@ import Header from 'components/header';
 import HeroSection from 'components/hero-section';
 import SolutionSection from 'components/solutions-showcase';
 import TestimonialSection from 'components/testimonial';
+import * as React from 'react';
 import { getData } from './actions';
 
-const Home: NextPage = async () => {
+type HomePageProps = Record<string, never>;
+
+const Home: NextPage<HomePageProps> = async (): Promise<React.ReactElement> => {
   try {
     const { companyInfo, team, services, solutions, inquiryOptions, footerLinks, navigation, testimonials } = await getData();
 

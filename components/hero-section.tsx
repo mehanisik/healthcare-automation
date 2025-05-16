@@ -10,7 +10,11 @@ import SectionContainer from './section-container';
 import { TrustBadge } from './trust-badge';
 import { Button } from './ui/button';
 
-export default function HeroSection({ companyInfo }: { companyInfo: Data['companyInfo'] }) {
+type HeroSectionProps = {
+  readonly companyInfo: Data['companyInfo'];
+};
+
+export default function HeroSection({ companyInfo }: HeroSectionProps) {
   return (
     <SectionContainer id="hero">
       <BackgroundPattern />

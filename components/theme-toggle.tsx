@@ -6,7 +6,7 @@ import * as React from 'react';
 import { Button } from '@/components/ui/button';
 
 type ThemeToggleProps = {
-  className?: string;
+  readonly className?: string;
 };
 
 export function ThemeToggle({ className }: ThemeToggleProps): React.ReactElement {

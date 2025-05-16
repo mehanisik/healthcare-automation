@@ -1,5 +1,6 @@
 'use client';
 
+import type { ContactFormData } from '@/app/schema/contact-schema';
 import type { Data } from '@/app/types';
 import { Button } from 'components/ui/button';
 import { Card, CardContent } from 'components/ui/card';
@@ -16,13 +17,12 @@ import { Textarea } from 'components/ui/textarea';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CheckCircle2, Loader2, XCircle } from 'lucide-react';
 import { Controller } from 'react-hook-form';
-import { toast } from 'sonner';
 import useContactService from '@/app/hooks/use-contact-service';
 import AppointmentCalendar from './appointment-calendar';
 import SectionContainer from './section-container';
 import { useSectionAnimation } from './ui/section-animation';
 
-function ContactForm({ inquiryOptions }: { inquiryOptions: Data['inquiryOptions'] }) {
+function ContactForm({ inquiryOptions }: { readonly inquiryOptions: Data['inquiryOptions'] }) {
   const {
     register,
     handleSubmit,
@@ -33,10 +33,9 @@ function ContactForm({ inquiryOptions }: { inquiryOptions: Data['inquiryOptions'
     handleContactFormSubmit,
   } = useContactService();
 
-  function onSubmit(data: any) {
-    toast.success('Message sent successfully!');
-    handleContactFormSubmit(data, toast);
-  }
+  const onSubmit = (data: ContactFormData): void => {
+    handleContactFormSubmit(data);
+  };
 
   return (
     <Card className="flex-1 w-full max-w-5xl mx-auto border-border bg-card/50 rounded-3xl shadow-sm overflow-hidden h-full flex flex-col">

@@ -1,7 +1,11 @@
 import { motion } from 'framer-motion';
 import { Star } from 'lucide-react';
 
-export function StarRating({ rating }: { rating: number }) {
+type StarRatingProps = {
+  readonly rating: number;
+};
+
+export function StarRating({ rating }: StarRatingProps) {
   return (
     <motion.div
       className="flex gap-0.5"
@@ -11,9 +15,7 @@ export function StarRating({ rating }: { rating: number }) {
     >
       {Array.from({ length: rating }).map((_, i) => (
         <motion.div
-          key={
-            crypto.randomUUID()
-          }
+          key={crypto.randomUUID()}
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: i * 0.1, type: 'spring', stiffness: 200 }}

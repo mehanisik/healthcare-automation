@@ -6,18 +6,40 @@ import { Calendar } from './ui/calendar';
 import { Card } from './ui/card';
 import { Input } from './ui/input';
 
-const COMPANY_HOURS = {
+/**
+ * Represents a time slot for an appointment
+ */
+type TimeSlot = {
+  readonly start: Date;
+  readonly end: Date;
+};
+
+/**
+ * Represents the company's working hours
+ */
+type CompanyHours = {
+  readonly start: number;
+  readonly end: number;
+};
+
+const COMPANY_HOURS: CompanyHours = {
   start: 9,
   end: 17,
-};
+} as const;
+
 const SLOT_DURATION_MINUTES = 90;
 
-function getSlotsForDay(date: Date) {
+/**
+ * Generates available time slots for a given date based on company hours
+ * @param date - The date to generate slots for
+ * @returns Array of available time slots
+ */
+function getSlotsForDay(date: Date): readonly TimeSlot[] {
   const day = date.getDay();
   if (day === 0 || day === 6) {
     return [];
   }
-  const slots = [];
+  const slots: TimeSlot[] = [];
   const start = new Date(date);
   start.setHours(COMPANY_HOURS.start, 0, 0, 0);
   const end = new Date(date);
@@ -42,7 +64,11 @@ export default function AppointmentCalendar() {
   const [submitting, setSubmitting] = useState(false);
   const slots = selectedDate ? getSlotsForDay(selectedDate) : [];
 
-  function handleSubmit(e: React.FormEvent) {
+  /**
+   * Handles the appointment booking form submission
+   * @param e - The form event
+   */
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     if (!selectedDate || selectedSlot === null || !name || !email) {
       return;
@@ -56,7 +82,7 @@ export default function AppointmentCalendar() {
       setName('');
       setEmail('');
     }, 1000);
-  }
+  };
 
   return (
     <Card className="flex-1 h-full rounded-3xl shadow-sm overflow-hidden bg-card/50 border border-border flex flex-col justify-stretch">

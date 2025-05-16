@@ -1,12 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
 
-export function useActiveSection(navLinks: { id: string; href: string }[]) {
+type NavLink = {
+  readonly id: string;
+  readonly href: string;
+};
+
+type ActiveSectionReturn = {
+  readonly activeSection: string;
+  readonly isScrolled: boolean;
+  readonly scrollToSection: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
+};
+
+export function useActiveSection(navLinks: readonly NavLink[]): ActiveSectionReturn {
   const [activeSection, setActiveSection] = useState<string>('hero');
-  const [isScrolling, setIsScrolling] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isScrolling, setIsScrolling] = useState<boolean>(false);
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = (): void => {
       const scrollPosition = window.scrollY;
       setIsScrolled(scrollPosition > 20);
     };

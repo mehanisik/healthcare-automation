@@ -4,7 +4,11 @@ import type { Data } from '@/app/types';
 import SectionContainer from './section-container';
 import { motion, useSectionAnimation } from './ui/section-animation';
 
-export default function FeatureSection({ services }: { services: Data['services'] }) {
+type FeatureSectionProps = {
+  readonly services: Data['services'];
+};
+
+export default function FeatureSection({ services }: FeatureSectionProps) {
   const animation = useSectionAnimation();
 
   return (

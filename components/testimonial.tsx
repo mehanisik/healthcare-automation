@@ -7,7 +7,48 @@ import BackgroundPattern from './background-pattern';
 import SectionContainer from './section-container';
 import { StarRating } from './star-rating';
 
-const cardVariants = {
+type CardVariants = {
+  readonly hidden: { readonly opacity: number; readonly y: number };
+  readonly visible: {
+    readonly opacity: number;
+    readonly y: number;
+    readonly transition: {
+      readonly type: string;
+      readonly stiffness: number;
+      readonly damping: number;
+    };
+  };
+};
+
+type AvatarVariants = {
+  readonly hidden: { readonly scale: number; readonly rotate: number };
+  readonly visible: {
+    readonly scale: number;
+    readonly rotate: number;
+    readonly transition: {
+      readonly type: string;
+      readonly stiffness: number;
+      readonly damping: number;
+      readonly delay: number;
+    };
+  };
+};
+
+type TextVariants = {
+  readonly hidden: { readonly opacity: number; readonly x: number };
+  readonly visible: {
+    readonly opacity: number;
+    readonly x: number;
+    readonly transition: {
+      readonly type: string;
+      readonly stiffness: number;
+      readonly damping: number;
+      readonly delay: number;
+    };
+  };
+};
+
+const cardVariants: CardVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
@@ -20,7 +61,7 @@ const cardVariants = {
   },
 };
 
-const avatarVariants = {
+const avatarVariants: AvatarVariants = {
   hidden: { scale: 0, rotate: -180 },
   visible: {
     scale: 1,
@@ -34,7 +75,7 @@ const avatarVariants = {
   },
 };
 
-const textVariants = {
+const textVariants: TextVariants = {
   hidden: { opacity: 0, x: -20 },
   visible: {
     opacity: 1,
@@ -48,7 +89,11 @@ const textVariants = {
   },
 };
 
-export default function TestimonialSection({ testimonials }: { testimonials: Data['testimonials'] }) {
+type TestimonialSectionProps = {
+  readonly testimonials: Data['testimonials'];
+};
+
+export default function TestimonialSection({ testimonials }: TestimonialSectionProps) {
   return (
     <SectionContainer id="clients" mainTitle="Trusted by Healthcare Professionals" titleChip="TESTIMONIALS" titleDescription="Our healthcare management solutions have helped thousands of medical practices improve their operations and patient care.">
       <div className="relative mx-auto max-w-7xl">

@@ -6,7 +6,11 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import SectionContainer from './section-container';
 import { motion, useSectionAnimation } from './ui/section-animation';
 
-export default function SolutionsShowcase({ solutions }: { solutions: Data['solutions'] }) {
+type SolutionsShowcaseProps = {
+  readonly solutions: Data['solutions'];
+};
+
+export default function SolutionsShowcase({ solutions }: SolutionsShowcaseProps) {
   const animation = useSectionAnimation();
 
   return (
@@ -51,7 +55,7 @@ export default function SolutionsShowcase({ solutions }: { solutions: Data['solu
                         {solution.description}
                       </p>
                       <div className="flex flex-wrap gap-2 mt-auto">
-                        {solution.tags && solution.tags.map((tag: string) => (
+                        {solution.tags?.map((tag: string) => (
                           <span
                             key={tag}
                             className="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary"

@@ -6,7 +6,6 @@ const baseConfig: NextConfig = {
   },
   poweredByHeader: false,
   reactStrictMode: true,
-  serverExternalPackages: ['@electric-sql/pglite'],
 };
 
 const nextConfig = baseConfig;

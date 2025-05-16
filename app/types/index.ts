@@ -1,63 +1,62 @@
 export type Data = {
-  companyInfo: {
-    name: string;
-    description: string;
-    hours: string;
-    address: Array<string>;
+  readonly companyInfo: {
+    readonly name: string;
+    readonly description: string;
+    readonly hours: string;
+    readonly address: string[];
   };
-  team: Array<{
-    name: string;
-    role: string;
-    description: string;
+  readonly team: Array<{
+    readonly name: string;
+    readonly role: string;
+    readonly description: string;
   }>;
-  services: Array<{
-    title: string;
-    description: string;
-    plainDescription: string;
+  readonly services: Array<{
+    readonly title: string;
+    readonly description: string;
+    readonly plainDescription: string;
   }>;
-  solutions: Array<{
-    key: string;
-    title: string;
-    description: string;
-    plainDescription: string;
-    bg?: string;
-    img: string;
-    imgAlt: string;
-    tags: Array<string>;
+  readonly solutions: Array<{
+    readonly key: string;
+    readonly title: string;
+    readonly description: string;
+    readonly plainDescription: string;
+    readonly bg?: string;
+    readonly img: string;
+    readonly imgAlt: string;
+    readonly tags: string[];
   }>;
-  inquiryOptions: Array<{
-    value: string;
-    label: string;
+  readonly inquiryOptions: Array<{
+    readonly value: string;
+    readonly label: string;
   }>;
-  footerLinks: Array<{
-    id: string;
-    group: string;
-    items: Array<{
-      id: string;
-      title: string;
-      href: string;
+  readonly footerLinks: Array<{
+    readonly id: string;
+    readonly group: string;
+    readonly items: Array<{
+      readonly id: string;
+      readonly title: string;
+      readonly href: string;
     }>;
   }>;
-  navigation: {
-    main: Array<{
-      label: string;
-      href: string;
+  readonly navigation: {
+    readonly main: Array<{
+      readonly label: string;
+      readonly href: string;
     }>;
-    footer: Array<{
-      label: string;
-      href: string;
+    readonly footer: Array<{
+      readonly label: string;
+      readonly href: string;
     }>;
   };
-  testimonials: Array<{
-    id: number;
-    content: string;
-    author: string;
-    rating: number;
+  readonly testimonials: Array<{
+    readonly id: number;
+    readonly content: string;
+    readonly author: string;
+    readonly rating: number;
   }>;
-
 };
 
 export type NavItem = {
-  label: string;
-  href: string;
+  readonly label: string;
+  readonly href: string;
 };
