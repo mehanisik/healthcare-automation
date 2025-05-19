@@ -1,6 +1,7 @@
 'use client';
 
-import { FadeIn } from '#/components/motion';
+import { logOutFn } from '#/actions/auth';
+import { AuthContext } from '#/components/providers/auth-provider';
 import { ThemeToggle } from '#/components/providers/theme-toggle';
 import { Button } from '#/components/ui/button';
 import { Logo } from '#/components/ui/logo';
@@ -8,133 +9,85 @@ import {
   NavigationMenu,
   NavigationMenuList,
 } from '#/components/ui/navigation-menu';
-import { NavLinkComponent } from '#/components/ui/navlink';
 import { Sheet, SheetContent, SheetTrigger } from '#/components/ui/sheet';
 import { navLinks } from '#/constants/navigation';
-import { createClient } from '#/db/supabase/client';
 import { useActiveSection } from '#/hooks/use-active-section';
 import { LayoutDashboard, LogIn, LogOut, Menu } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import { use } from 'react';
 
-function Header(): React.ReactElement {
+export default function Header() {
+  const { user, isLoading } = use(AuthContext);
   const { activeSection, isScrolled, scrollToSection } = useActiveSection(navLinks);
-  const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const supabase = createClient();
-        const { data: { user } } = await supabase.auth.getUser();
-        setIsAuthenticated(!!user);
-      } catch (error) {
-        console.error('Auth check failed:', error);
-        setIsAuthenticated(false);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    checkAuth();
-
-    // Set up auth state listener
-    const supabase = createClient();
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsAuthenticated(!!session?.user);
-    });
-
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
-
-  const handleLogout = async () => {
-    try {
-      const supabase = createClient();
-      await supabase.auth.signOut();
-      setIsAuthenticated(false);
-      router.push('/');
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <nav className="sticky top-0 z-50 mx-auto border mt-4 h-16 max-w-5xl rounded-3xl bg-background/80 backdrop-blur-sm">
-        <div className="mx-auto flex h-full items-center justify-between px-4 sm:px-6">
-          <Logo type="text" width={90} height={30} />
-          <div className="flex items-center gap-3 sm:gap-4">
-            <div className="h-9 w-20 animate-pulse rounded-md bg-muted" />
-            <ThemeToggle />
-          </div>
-        </div>
-      </nav>
-    );
-  }
 
   return (
     <nav
-      className={`sticky top-0 z-50 mx-auto border mt-4 h-16 max-w-5xl rounded-3xl transition-all duration-300 ${
+      className={`sticky top-0 z-50 mx-auto border mt-2 sm:mt-4 h-14 sm:h-16 max-w-5xl rounded-2xl sm:rounded-3xl transition-all duration-300 ${
         isScrolled ? 'bg-background/95 backdrop-blur-md shadow-sm' : 'bg-background/80 backdrop-blur-sm'
       }`}
       role="navigation"
       aria-label="Main navigation"
     >
-      <div className="mx-auto flex h-full items-center justify-between px-4 sm:px-6">
-        <Logo type="text" width={90} height={30} />
+      <div className="mx-auto flex h-full items-center justify-between px-3 sm:px-4 md:px-6">
+        <Logo type="text" width={80} height={25} className="sm:w-[90px] sm:h-[30px]" />
 
         <NavigationMenu className="hidden lg:block">
-          <NavigationMenuList className="flex items-center gap-3">
+          <NavigationMenuList className="flex items-center gap-2 lg:gap-3">
             {navLinks.map(link => (
-              <NavLinkComponent
+              <Link
                 key={link.id}
-                link={link}
-                activeSection={activeSection}
-                scrollToSection={scrollToSection}
-              />
+                href={link.href}
+                className={`group relative flex items-center rounded-lg ${activeSection === link.id ? 'bg-primary/10 text-primary' : ''} px-3 lg:px-4 py-2 lg:py-2.5 text-sm lg:text-base transition-all duration-300 ease-in-out hover:bg-primary/5 hover:text-primary`}
+                onClick={e => scrollToSection(e, link.href)}
+                aria-current={activeSection === link.id ? 'page' : undefined}
+              >
+                <span className="relative z-10 whitespace-nowrap">{link.label}</span>
+              </Link>
             ))}
           </NavigationMenuList>
         </NavigationMenu>
 
-        <div className="flex items-center gap-3 sm:gap-4">
-          {isAuthenticated
-            ? (
-                <>
+        <div className="flex items-center gap-2 sm:gap-3 md:gap-4">
+          {!isLoading && (
+            user
+              ? (
+                  <>
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="transition-all duration-300 hover:bg-primary/5 hover:text-primary"
+                      asChild
+                    >
+                      <Link href="/dashboard" title="Dashboard">
+                        <LayoutDashboard className="size-4" aria-hidden="true" />
+                      </Link>
+                    </Button>
+                    <form action={logOutFn}>
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="text-destructive transition-all duration-300 hover:bg-destructive/10 hover:text-destructive"
+                        type="submit"
+                        title="Logout"
+                      >
+                        <LogOut className="size-4" aria-hidden="true" />
+                      </Button>
+                    </form>
+                  </>
+                )
+              : (
                   <Button
                     variant="outline"
-                    size="sm"
-                    className="gap-2 transition-all duration-300 hover:bg-primary/5 hover:text-primary"
-                    onClick={() => router.push('/dashboard')}
+                    size="icon"
+                    className="transition-all duration-300"
+                    asChild
                   >
-                    <LayoutDashboard className="size-4" aria-hidden="true" />
-                    <span>Dashboard</span>
+                    <Link href="/auth" title="Sign In">
+                      <LogIn className="size-4" aria-hidden="true" />
+                    </Link>
                   </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="gap-2 text-destructive transition-all duration-300 hover:bg-destructive/10 hover:text-destructive"
-                    onClick={handleLogout}
-                  >
-                    <LogOut className="size-4" aria-hidden="true" />
-                    <span>Logout</span>
-                  </Button>
-                </>
-              )
-            : (
-                <Button
-                  variant="default"
-                  size="sm"
-                  className="gap-2 transition-all duration-300"
-                  onClick={() => router.push('/auth')}
-                >
-                  <LogIn className="size-4" aria-hidden="true" />
-                  <span>Sign In</span>
-                </Button>
-              )}
+                )
+          )}
           <ThemeToggle />
           <div className="lg:hidden">
             <Sheet>
@@ -157,23 +110,11 @@ function Header(): React.ReactElement {
                     <Link
                       key={link.id}
                       href={link.href}
+                      className="group relative flex items-center rounded-lg px-4 py-2.5 text-base transition-all duration-300 ease-in-out hover:bg-primary/5 hover:text-primary sm:py-3 sm:text-lg"
                       onClick={e => scrollToSection(e, link.href)}
-                      className={`group relative flex items-center rounded-lg px-4 py-2.5 text-base transition-all duration-300 ease-in-out sm:py-3 sm:text-lg ${
-                        activeSection === link.id
-                          ? 'text-primary font-medium'
-                          : 'hover:bg-primary/5 hover:text-primary'
-                      }`}
                       aria-current={activeSection === link.id ? 'page' : undefined}
                     >
                       <span className="relative z-10 whitespace-nowrap">{link.label}</span>
-                      {activeSection === link.id && (
-                        <FadeIn>
-                          <div
-                            className="absolute inset-0 rounded-lg bg-primary/50 transition-opacity duration-300"
-                            aria-hidden="true"
-                          />
-                        </FadeIn>
-                      )}
                     </Link>
                   ))}
                 </nav>
@@ -185,5 +126,3 @@ function Header(): React.ReactElement {
     </nav>
   );
 }
-
-export default Header;

@@ -1,36 +1,21 @@
+import { loginFn } from '#/actions/auth';
 import BackgroundPattern from '#/components/ui/background-pattern';
 import { Button } from '#/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '#/components/ui/card';
 import { Input } from '#/components/ui/input';
-import { Label } from '#/components/ui/label';
 import { Logo } from '#/components/ui/logo';
 import { createClient } from '#/db/supabase/server';
-import { revalidatePath } from 'next/cache';
+import { Label } from '@radix-ui/react-label';
 import Image from 'next/image';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 export default async function AuthPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+
   if (user) {
     redirect('/dashboard');
   }
-
-  const handleLogin = async (formData: FormData) => {
-    'use server';
-    const supabase = await createClient();
-    const data = {
-      email: formData.get('email') as string,
-      password: formData.get('password') as string,
-    };
-    const { error } = await supabase.auth.signInWithPassword(data);
-    if (error) {
-      redirect('/error');
-    }
-    revalidatePath('/', 'layout');
-    redirect('/dashboard');
-  };
 
   return (
     <div className="container relative min-h-screen flex-col items-center justify-center grid lg:max-w-none lg:grid-cols-2 lg:px-0 bg-background">
@@ -76,11 +61,11 @@ export default async function AuthPage() {
               Welcome back
             </h1>
           </div>
-          <Card className="border-primary bg-card   text-card-foreground shadow-2xl">
+          <Card className="border-primary bg-card text-card-foreground shadow-2xl">
             <CardHeader>
               <CardTitle className="text-foreground text-center">Sign in</CardTitle>
             </CardHeader>
-            <form action={handleLogin}>
+            <form action={loginFn}>
               <CardContent className="grid gap-4">
                 <div className="grid gap-2">
                   <Label htmlFor="email" className="text-foreground">Email</Label>
@@ -116,23 +101,6 @@ export default async function AuthPage() {
               </CardFooter>
             </form>
           </Card>
-          <p className="px-8 text-center text-sm text-muted-foreground">
-            By clicking continue, you agree to our
-            <Link
-              href="#"
-              className="text-primary hover:text-primary/90 underline underline-offset-4"
-            >
-              Terms of Service
-            </Link>
-            and
-            <Link
-              href="#"
-              className="text-primary hover:text-primary/90 underline underline-offset-4"
-            >
-              Privacy Policy
-            </Link>
-            .
-          </p>
         </div>
       </div>
     </div>

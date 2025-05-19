@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { AuthProvider } from '#/components/providers/auth-provider';
 import { env } from '#/env';
 import { cn } from '#/lib/utils';
 import { Analytics } from '@vercel/analytics/react';
@@ -105,10 +106,12 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>): Rea
           enableSystem
           disableTransitionOnChange
         >
-          <Toaster />
-          <Analytics />
-          <SpeedInsights />
-          {children}
+          <AuthProvider>
+            <Toaster />
+            <Analytics />
+            <SpeedInsights />
+            {children}
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
