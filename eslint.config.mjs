@@ -28,6 +28,7 @@ export default antfu(
       'node_modules/**/*',
       'public/**/*',
       'components/ui/**/*',
+      '.cursor/**/*',
     ],
   },
   // --- Next.js Specific Rules ---
