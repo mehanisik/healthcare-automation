@@ -32,7 +32,6 @@ const automationStats = [
 export function DashboardContent() {
   return (
     <div className="space-y-6">
-      {/* Stats Overview */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {stats.map(stat => (
           <Card key={stat.title}>
@@ -47,9 +46,7 @@ export function DashboardContent() {
         ))}
       </div>
 
-      {/* Main Content Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        {/* Recent Automations */}
         <Card className="col-span-4">
           <CardHeader>
             <CardTitle>Recent Automations</CardTitle>
@@ -82,7 +79,6 @@ export function DashboardContent() {
           </CardContent>
         </Card>
 
-        {/* Upcoming Tasks */}
         <Card className="col-span-3">
           <CardHeader>
             <CardTitle>Upcoming Tasks</CardTitle>
@@ -109,7 +105,6 @@ export function DashboardContent() {
         </Card>
       </div>
 
-      {/* Automation Distribution */}
       <Card>
         <CardHeader>
           <CardTitle>Automation Distribution</CardTitle>
@@ -137,7 +132,6 @@ export function DashboardContent() {
         </CardContent>
       </Card>
 
-      {/* Quick Actions */}
       <Card>
         <CardHeader>
           <CardTitle>Quick Actions</CardTitle>

@@ -1,16 +1,16 @@
 'use client';
 
 import { ThemeToggle } from '#/components/providers/theme-toggle';
+import { Button } from '#/components/ui/button';
 import { Logo } from '#/components/ui/logo';
-import { NavLinkComponent } from '#/components/ui/navlink';
-import { navLinks } from '#/constants/navigation';
-import { useActiveSection } from '#/hooks/use-active-section';
-import { Button } from 'components/ui/button';
 import {
   NavigationMenu,
   NavigationMenuList,
-} from 'components/ui/navigation-menu';
-import { Sheet, SheetContent, SheetTrigger } from 'components/ui/sheet';
+} from '#/components/ui/navigation-menu';
+import { NavLinkComponent } from '#/components/ui/navlink';
+import { Sheet, SheetContent, SheetTrigger } from '#/components/ui/sheet';
+import { navLinks } from '#/constants/navigation';
+import { useActiveSection } from '#/hooks/use-active-section';
 import { motion } from 'framer-motion';
 import { Menu } from 'lucide-react';
 import Link from 'next/link';
@@ -28,7 +28,7 @@ function Header(): React.ReactElement {
       aria-label="Main navigation"
     >
       <div className="mx-auto flex h-full items-center justify-between px-4 sm:px-6">
-        <Logo />
+        <Logo type="text" width={90} height={30} />
 
         <NavigationMenu className="hidden lg:block">
           <NavigationMenuList className="flex items-center gap-3 ">
@@ -59,7 +59,7 @@ function Header(): React.ReactElement {
               </SheetTrigger>
               <SheetContent side="right" className="w-[280px] sm:w-[320px]">
                 <div className="mb-6 flex items-center border-b border-border pb-4">
-                  <Logo />
+                  <Logo type="text" width={120} height={40} />
                 </div>
                 <nav className="flex flex-col space-y-1" aria-label="Mobile navigation">
                   {navLinks.map(link => (

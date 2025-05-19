@@ -1,10 +1,20 @@
 'use client';
+import type { User } from '@supabase/supabase-js';
 import { Avatar, AvatarFallback, AvatarImage } from '#/components/ui/avatar';
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from '#/components/ui/collapsible';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+
+  DropdownMenuTrigger,
+} from '#/components/ui/dropdown-menu';
 import { Logo } from '#/components/ui/logo';
 import {
   Sidebar,
@@ -24,27 +34,40 @@ import {
   useSidebar,
 } from '#/components/ui/sidebar';
 import { sidebarItems } from '#/constants/sidebar';
+
+import { supabaseClient } from '#/db/supabase/client';
 import { cn } from '#/lib/utils';
 import {
   ChevronRight,
-  DraftingCompass,
-} from 'lucide-react';
+  LogOut,
+  UserIcon,
 
+} from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
 import * as React from 'react';
 
-export function AppSidebar() {
+export function AppSidebar({ user }: { user: User }) {
   const pathname = usePathname();
   const { state } = useSidebar();
   const isCollapsed = state === 'collapsed';
 
+  const handleLogout = async () => {
+    await supabaseClient.auth.signOut();
+    redirect('/auth');
+  };
   return (
 
     <Sidebar collapsible="icon">
       <SidebarHeader>
         <div className="p-2 flex items-center gap-2">
-          {!isCollapsed ? <Logo width={70} height={70} /> : <DraftingCompass className="size-4" />}
+          {!isCollapsed
+            ? (
+                <Logo type="text" width={100} height={30} />
+              )
+            : (
+                <Logo type="icon" width={32} height={32} />
+              )}
         </div>
       </SidebarHeader>
       <SidebarContent>
@@ -69,7 +92,7 @@ export function AppSidebar() {
                           <CollapsibleTrigger asChild>
                             <SidebarMenuButton
                               tooltip={item.title}
-                              isActive={pathname === item.url}
+                              isActive={pathname.startsWith(item.url)}
                               className={cn(
                                 'w-full flex items-center gap-2 px-3 py-2 rounded-md transition-colors duration-200',
                                 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
@@ -151,10 +174,39 @@ export function AppSidebar() {
         ))}
       </SidebarContent>
       <SidebarFooter className="p-2 border-t border-border">
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Avatar className="cursor-pointer hover:opacity-80 transition-opacity ring-1 ring-border">
+              <AvatarImage src={user.user_metadata?.avatar_url} />
+              <AvatarFallback className="bg-sidebar-accent text-sidebar-accent-foreground">
+                {user.user_metadata?.name
+                  ? user.user_metadata.name.split(' ').map((n: string) => n[0]).join('')
+                  : user.email?.slice(0, 2).toUpperCase() || 'U'}
+              </AvatarFallback>
+            </Avatar>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="end"
+            className="w-56 bg-popover text-popover-foreground border-border"
+            sideOffset={8}
+          >
+            <DropdownMenuLabel className="text-muted-foreground font-normal">
+              {user.user_metadata?.name || user.email || 'User'}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator className="bg-border" />
+            <DropdownMenuItem className="focus:bg-accent focus:text-accent-foreground cursor-pointer">
+              <UserIcon className="mr-2 h-4 w-4 text-muted-foreground" />
+              <span>Profile</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={handleLogout}
+              className="text-destructive focus:text-destructive focus:bg-destructive/10 cursor-pointer"
+            >
+              <LogOut className="mr-2 h-4 w-4" />
+              <span>Log out</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

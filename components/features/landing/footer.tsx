@@ -1,4 +1,5 @@
 import type { Data } from '#/types';
+import { Logo } from '#/components/ui/logo';
 import Link from 'next/link';
 
 type FooterSectionProps = {
@@ -15,9 +16,9 @@ export default function FooterSection({ footerLinks, officeInfo }: FooterSection
             <Link
               href="/"
               aria-label="go home"
-              className="block size-fit text-xl font-bold"
+              className="block size-fit"
             >
-              {officeInfo.name}
+              <Logo type="text" width={140} height={40} forceColor color="#ffffff" />
             </Link>
             <p className=" mt-4">
               {officeInfo.description}
@@ -52,9 +53,11 @@ export default function FooterSection({ footerLinks, officeInfo }: FooterSection
           </div>
         </div>
         <div className="border-border mt-12 flex flex-wrap items-end justify-between gap-6 border-t py-6">
-          <span className=" order-last block text-center text-sm md:order-first">
+          <span className="order-last block text-center text-sm md:order-first gap-2">
             ©
+            {' '}
             {new Date().getFullYear()}
+            {' '}
             Girit Consulting, Inc. All rights reserved
           </span>
           <div className="order-first flex flex-wrap justify-center gap-6 text-sm md:order-last">
