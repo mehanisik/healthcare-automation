@@ -66,6 +66,10 @@ The project follows a component-based architecture with clear separation of conc
 - Server actions are implemented in the `actions/` directory
 - Type definitions and schemas are organized in their respective directories
 
-## License
+## CodeRabbit
+I have decided to use CodeRabbit to review the merge requests to give a shot to the new AI tools
 
+![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/mehanisik/healthcare-management?utm_source=oss&utm_medium=github&utm_campaign=mehanisik%2Fhealthcare-management&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
+
+## License
 MIT
