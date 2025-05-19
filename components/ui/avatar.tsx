@@ -5,6 +5,11 @@ import * as AvatarPrimitive from "@radix-ui/react-avatar"
 
 import { cn } from "#/lib/utils"
 
+/**
+ * Renders a styled avatar container using Radix UI's Avatar primitive.
+ *
+ * Applies default layout and appearance styles, and accepts additional props and class names for customization.
+ */
 function Avatar({
   className,
   ...props

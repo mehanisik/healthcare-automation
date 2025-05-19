@@ -10,6 +10,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
+/**
+ * Renders the authentication page with a login form and promotional content.
+ *
+ * Displays a two-column layout with a background image and marketing message on larger screens, and a centered login form for user authentication.
+ */
 export default async function AuthPage() {
   const handleLogin = async (formData: FormData) => {
     'use server';

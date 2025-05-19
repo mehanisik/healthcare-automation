@@ -7,6 +7,12 @@ type FooterSectionProps = {
   readonly officeInfo: Data['companyInfo'];
 };
 
+/**
+ * Renders the website footer with company information, office details, grouped navigation links, and a social media icon.
+ *
+ * @param footerLinks - Groups of footer navigation links to display.
+ * @param officeInfo - Company office information including description, hours, and address.
+ */
 export default function FooterSection({ footerLinks, officeInfo }: FooterSectionProps) {
   return (
     <footer className="bg-secondary text-white pt-16 dark:bg-[#121212] dark:border-t dark:border-border">

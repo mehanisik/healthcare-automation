@@ -2,6 +2,14 @@ import * as React from "react"
 
 import { cn } from "#/lib/utils"
 
+/****
+ * Renders a styled input element with customizable props and utility class support.
+ *
+ * Combines standard input attributes with predefined and custom CSS classes for consistent appearance and accessibility.
+ *
+ * @param className - Additional CSS classes to apply to the input element.
+ * @param type - The input type (e.g., "text", "password", etc.).
+ */
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   return (
     <input

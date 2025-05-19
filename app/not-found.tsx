@@ -3,6 +3,13 @@ import { FileQuestion } from 'lucide-react';
 import Link from 'next/link';
 import * as React from 'react';
 
+/**
+ * Displays a styled 404 error page with navigation options.
+ *
+ * Renders a user-friendly message indicating the requested page was not found, along with buttons to return home or contact support.
+ *
+ * @returns A React element representing the 404 "Not Found" page.
+ */
 export default function NotFound(): React.ReactElement {
   return (
     <div className="flex min-h-[60vh] items-center justify-center px-4">

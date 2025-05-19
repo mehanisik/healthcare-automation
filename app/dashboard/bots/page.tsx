@@ -45,6 +45,11 @@ const statusConfig = {
   maintenance: { icon: Bot, color: 'bg-blue-500', text: 'Maintenance' },
 };
 
+/**
+ * Displays a dashboard of bots with their statuses and key metrics in a card-based layout.
+ *
+ * Renders a responsive grid where each card shows a bot's name, status badge, last active time, tasks completed, and uptime percentage.
+ */
 export default function BotsPage() {
   return (
     <div className="space-y-6">

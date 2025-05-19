@@ -16,6 +16,13 @@ import { Menu } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 
+/**
+ * Renders a responsive navigation bar with theme toggling and active section highlighting.
+ *
+ * The navigation bar adapts to screen size, displaying a horizontal menu on large screens and a side sheet menu on mobile devices. It highlights the currently active section and allows users to scroll to different sections of the page. Includes a theme toggle and accessibility features.
+ *
+ * @returns The navigation bar React element.
+ */
 function Header(): React.ReactElement {
   const { activeSection, isScrolled, scrollToSection } = useActiveSection(navLinks);
 

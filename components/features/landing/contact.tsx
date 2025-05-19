@@ -22,6 +22,13 @@ import { CheckCircle2, Loader2, XCircle } from 'lucide-react';
 import { Controller } from 'react-hook-form';
 import SectionContainer from './section-container';
 
+/**
+ * Renders a contact form with validation and animated submission feedback.
+ *
+ * Displays input fields for user details, inquiry reason, and message, and provides real-time validation errors. The form supports animated transitions for loading, success, and error states upon submission.
+ *
+ * @param inquiryOptions - The selectable options for the reason for inquiry dropdown.
+ */
 function ContactForm({ inquiryOptions }: { readonly inquiryOptions: Data['inquiryOptions'] }) {
   const {
     register,

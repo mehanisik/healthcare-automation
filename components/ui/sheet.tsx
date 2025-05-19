@@ -6,6 +6,11 @@ import { XIcon } from "lucide-react"
 
 import { cn } from "#/lib/utils"
 
+/**
+ * Root component for the Sheet dialog, providing the container for all sheet content and behavior.
+ *
+ * Forwards all props to the underlying dialog root and adds a `data-slot="sheet"` attribute for styling or testing.
+ */
 function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />
 }

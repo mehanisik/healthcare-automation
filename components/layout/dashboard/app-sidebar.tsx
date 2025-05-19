@@ -47,6 +47,13 @@ import Link from 'next/link';
 import { redirect, usePathname } from 'next/navigation';
 import * as React from 'react';
 
+/**
+ * Renders a collapsible sidebar navigation UI for authenticated users, featuring grouped menu items, nested submenus, and a user avatar dropdown with logout functionality.
+ *
+ * The sidebar adapts its layout and content based on the collapsed state and current route, providing active state highlighting and responsive design. Menu items and groups are dynamically generated from a configuration object, and the user dropdown allows access to profile and logout actions.
+ *
+ * @param user - The authenticated user whose information is displayed in the sidebar footer.
+ */
 export function AppSidebar({ user }: { user: User }) {
   const pathname = usePathname();
   const { state } = useSidebar();

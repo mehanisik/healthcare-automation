@@ -45,6 +45,11 @@ const levelConfig = {
   error: { icon: AlertCircle, color: 'text-red-500', bg: 'bg-red-100', text: 'Error' },
 };
 
+/**
+ * Displays a list of recent log entries in a styled card layout.
+ *
+ * Each log entry shows its level with an icon and colored badge, the message, timestamp, bot name, and additional details.
+ */
 export default function LogsPage() {
   return (
     <div className="space-y-6">

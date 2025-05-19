@@ -33,6 +33,11 @@ const automationStats = [
   { name: 'Insurance Verification', value: 10 },
 ];
 
+/**
+ * Renders the analytics dashboard page with metrics overview, automation distribution, and analytics chart placeholders.
+ *
+ * Displays key performance indicators, a breakdown of automation categories with progress bars, and sections reserved for future analytics charts.
+ */
 export default function AnalyticsPage() {
   return (
     <div className="space-y-6">

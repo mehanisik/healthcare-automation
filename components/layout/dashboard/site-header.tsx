@@ -12,6 +12,11 @@ import { SidebarTrigger } from '#/components/ui/sidebar';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
 
+/**
+ * Renders the site header with a sidebar trigger, breadcrumb navigation, and theme toggle.
+ *
+ * The breadcrumb trail is dynamically generated from the current URL path, with each segment displayed as a navigable link.
+ */
 export function SiteHeader() {
   const pathname = usePathname();
   const breadcrumbs = pathname.split('/').slice(1).map((crumb, index, array) => ({

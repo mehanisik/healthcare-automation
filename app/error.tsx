@@ -10,6 +10,15 @@ type ErrorProps = {
   readonly reset: () => void;
 };
 
+/**
+ * Displays a user-friendly error message with options to retry the failed action or return to the home page.
+ *
+ * Renders the provided error message and offers buttons to reset the error state or navigate back to the home route.
+ *
+ * @param error - The error object containing details about the encountered error.
+ * @param reset - Callback function to reset the error boundary state.
+ * @returns A React element presenting the error UI.
+ */
 export default function Error({ error, reset }: ErrorProps): React.ReactElement {
   const router = useRouter();
   return (

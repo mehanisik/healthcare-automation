@@ -29,6 +29,11 @@ const automationStats = [
   { name: 'Insurance Verification', value: 10 },
 ];
 
+/**
+ * Renders a dashboard UI displaying key metrics, recent automations, upcoming tasks, automation distribution, and quick action buttons.
+ *
+ * The component organizes static data into responsive cards and grids, providing an overview of automation activity and quick access to common actions.
+ */
 export function DashboardContent() {
   return (
     <div className="space-y-6">

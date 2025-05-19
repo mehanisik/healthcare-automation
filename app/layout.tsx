@@ -80,6 +80,14 @@ type RootLayoutProps = {
   children: React.ReactNode;
 };
 
+/**
+ * Defines the root layout for the Girit Consulting Next.js application, applying global metadata, theming, and essential providers.
+ *
+ * Wraps all page content with HTML structure, global styles, theme management, analytics, and notification components.
+ *
+ * @param children - The page content to render within the layout.
+ * @returns The complete HTML structure for the application's root layout.
+ */
 export default function RootLayout({ children }: Readonly<RootLayoutProps>): React.ReactElement {
   return (
     <html lang="en" suppressHydrationWarning>

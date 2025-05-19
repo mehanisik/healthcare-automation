@@ -49,6 +49,11 @@ const statusConfig = {
   failed: { icon: AlertCircle, color: 'text-red-500', text: 'Failed' },
 };
 
+/**
+ * Displays a list of job cards with status indicators, progress bars, and job details.
+ *
+ * Each card shows the job's name, status (with icon and color), bot name, start time, estimated end time, and, if running, a visual progress bar.
+ */
 export default function JobsPage() {
   return (
     <div className="space-y-6">

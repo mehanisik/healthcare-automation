@@ -11,6 +11,15 @@ type LayoutProps = {
   readonly children: ReactNode;
 };
 
+/**
+ * Renders the authenticated dashboard layout with a persistent sidebar and header.
+ *
+ * Redirects unauthenticated users to the authentication page. The sidebar's initial open state is determined by a cookie value.
+ *
+ * @param children - The main content to display within the dashboard layout.
+ *
+ * @returns The dashboard layout JSX for authenticated users.
+ */
 export default async function Layout({ children }: LayoutProps) {
   const cookieStore = await cookies();
   const defaultOpen = cookieStore.get('sidebar:state')?.value === 'true';
