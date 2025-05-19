@@ -22,7 +22,7 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
-      "@/*": ["./*"]
+      "#/*": ["./*"]
     },
     "resolveJsonModule": true,
 

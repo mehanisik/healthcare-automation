@@ -1,8 +1,9 @@
 'use client';
 
+import { Button } from '#/components/ui/button';
 import { AlertCircle } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import * as React from 'react';
-import { Button } from '@/components/ui/button';
 
 type ErrorProps = {
   readonly error: Error & { readonly digest?: string };
@@ -10,11 +11,7 @@ type ErrorProps = {
 };
 
 export default function Error({ error, reset }: ErrorProps): React.ReactElement {
-  React.useEffect(() => {
-    // Log the error to an error reporting service
-    console.error('Application error:', error);
-  }, [error]);
-
+  const router = useRouter();
   return (
     <div className="flex min-h-[400px] items-center justify-center px-4">
       <div className="mx-auto flex max-w-2xl flex-col items-center gap-6 text-center">
@@ -27,13 +24,15 @@ export default function Error({ error, reset }: ErrorProps): React.ReactElement 
           We apologize for the inconvenience. Our team has been notified and is working to fix the
           issue.
         </p>
-
+        <p className="text-muted-foreground text-sm">
+          {error.message}
+        </p>
         <div className="flex gap-4">
           <Button onClick={() => reset()} variant="default" className="rounded-full">
             Try again
           </Button>
           <Button
-            onClick={() => (window.location.href = '/')}
+            onClick={() => router.push('/')}
             variant="outline"
             className="rounded-full"
           >

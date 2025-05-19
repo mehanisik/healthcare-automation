@@ -59,4 +59,4 @@ storybook-static
 /playwright-report/
 /playwright/.cache/
 
-.cursorrules
+.cursor

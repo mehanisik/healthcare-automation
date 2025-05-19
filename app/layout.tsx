@@ -1,19 +1,23 @@
 import type { Metadata, Viewport } from 'next';
-import { Analytics } from '@vercel/analytics/next';
-import { ThemeProvider } from 'components/theme-provider';
+import { env } from '#/env';
+import { cn } from '#/lib/utils';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { fontGeist, fontHeading, fontSans, fontUrban } from 'fonts';
-import { Toaster } from '@/components/ui/sonner';
-import { cn } from '@/lib/utils';
-import './globals.css';
+import { ThemeProvider } from 'next-themes';
+import { Toaster } from 'sonner';
+import 'styles/globals.css';
+
+const defaultUrl = env.BASE_URL ? `${env.BASE_URL}` : 'http://localhost:3000';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://giritconsulting.com'),
+  metadataBase: new URL(defaultUrl),
   title: {
     default: 'Girit Consulting',
     template: '%s | Girit Consulting',
   },
   description:
-    'Girit Consulting is a software development company that provides custom software solutions to businesses.',
+    'Girit Consulting is a healthcare management company that provides custom software solutions to businesses.',
   keywords: [
     'healthcare',
     'automation',
@@ -21,16 +25,17 @@ export const metadata: Metadata = {
     'digital health',
     'healthcare technology',
     'medical automation',
+    'healthcare management',
   ],
   authors: [{ name: 'Girit Consulting Team' }],
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://giritconsulting.com',
+    url: defaultUrl,
     siteName: 'Girit Consulting',
     title: 'Girit Consulting',
     description:
-      'Girit Consulting is a software development company that provides custom software solutions to businesses.',
+      'Girit Consulting is a healthcare management company that provides custom software solutions to businesses.',
     images: [
       {
         url: 'https://giritconsulting.com/og-image.jpg',
@@ -44,8 +49,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Girit Consulting',
     description:
-      'Girit Consulting is a software development company that provides custom software solutions to businesses.',
-    images: ['https://giritconsulting.com/twitter-image.jpg'],
+      'Girit Consulting is a healthcare management company that provides custom software solutions to businesses.',
+    images: [`${defaultUrl}/twitter-image.jpg`],
   },
   robots: {
     index: true,
@@ -57,9 +62,6 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
-  },
-  verification: {
-    google: 'your-google-verification-code',
   },
 };
 
@@ -105,6 +107,7 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>): Rea
         >
           <Toaster />
           <Analytics />
+          <SpeedInsights />
           {children}
         </ThemeProvider>
       </body>
