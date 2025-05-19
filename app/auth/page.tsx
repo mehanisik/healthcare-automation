@@ -11,6 +11,12 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 export default async function AuthPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (user) {
+    redirect('/dashboard');
+  }
+
   const handleLogin = async (formData: FormData) => {
     'use server';
     const supabase = await createClient();

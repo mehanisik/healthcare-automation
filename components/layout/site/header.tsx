@@ -1,5 +1,6 @@
 'use client';
 
+import { FadeIn } from '#/components/motion';
 import { ThemeToggle } from '#/components/providers/theme-toggle';
 import { Button } from '#/components/ui/button';
 import { Logo } from '#/components/ui/logo';
@@ -10,18 +11,74 @@ import {
 import { NavLinkComponent } from '#/components/ui/navlink';
 import { Sheet, SheetContent, SheetTrigger } from '#/components/ui/sheet';
 import { navLinks } from '#/constants/navigation';
+import { createClient } from '#/db/supabase/client';
 import { useActiveSection } from '#/hooks/use-active-section';
-import { motion } from 'framer-motion';
-import { Menu } from 'lucide-react';
+import { LayoutDashboard, LogIn, LogOut, Menu } from 'lucide-react';
 import Link from 'next/link';
-import React from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
 function Header(): React.ReactElement {
   const { activeSection, isScrolled, scrollToSection } = useActiveSection(navLinks);
+  const router = useRouter();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        setIsAuthenticated(!!user);
+      } catch (error) {
+        console.error('Auth check failed:', error);
+        setIsAuthenticated(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuth();
+
+    // Set up auth state listener
+    const supabase = createClient();
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(!!session?.user);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      const supabase = createClient();
+      await supabase.auth.signOut();
+      setIsAuthenticated(false);
+      router.push('/');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <nav className="sticky top-0 z-50 mx-auto border mt-4 h-16 max-w-5xl rounded-3xl bg-background/80 backdrop-blur-sm">
+        <div className="mx-auto flex h-full items-center justify-between px-4 sm:px-6">
+          <Logo type="text" width={90} height={30} />
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="h-9 w-20 animate-pulse rounded-md bg-muted" />
+            <ThemeToggle />
+          </div>
+        </div>
+      </nav>
+    );
+  }
 
   return (
     <nav
-      className={`sticky top-0 z-50 mx-auto border  mt-4 h-16 max-w-5xl rounded-3xl  transition-all duration-300 ${
+      className={`sticky top-0 z-50 mx-auto border mt-4 h-16 max-w-5xl rounded-3xl transition-all duration-300 ${
         isScrolled ? 'bg-background/95 backdrop-blur-md shadow-sm' : 'bg-background/80 backdrop-blur-sm'
       }`}
       role="navigation"
@@ -31,7 +88,7 @@ function Header(): React.ReactElement {
         <Logo type="text" width={90} height={30} />
 
         <NavigationMenu className="hidden lg:block">
-          <NavigationMenuList className="flex items-center gap-3 ">
+          <NavigationMenuList className="flex items-center gap-3">
             {navLinks.map(link => (
               <NavLinkComponent
                 key={link.id}
@@ -44,6 +101,40 @@ function Header(): React.ReactElement {
         </NavigationMenu>
 
         <div className="flex items-center gap-3 sm:gap-4">
+          {isAuthenticated
+            ? (
+                <>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="gap-2 transition-all duration-300 hover:bg-primary/5 hover:text-primary"
+                    onClick={() => router.push('/dashboard')}
+                  >
+                    <LayoutDashboard className="size-4" aria-hidden="true" />
+                    <span>Dashboard</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="gap-2 text-destructive transition-all duration-300 hover:bg-destructive/10 hover:text-destructive"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="size-4" aria-hidden="true" />
+                    <span>Logout</span>
+                  </Button>
+                </>
+              )
+            : (
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="gap-2 transition-all duration-300"
+                  onClick={() => router.push('/auth')}
+                >
+                  <LogIn className="size-4" aria-hidden="true" />
+                  <span>Sign In</span>
+                </Button>
+              )}
           <ThemeToggle />
           <div className="lg:hidden">
             <Sheet>
@@ -76,13 +167,12 @@ function Header(): React.ReactElement {
                     >
                       <span className="relative z-10 whitespace-nowrap">{link.label}</span>
                       {activeSection === link.id && (
-                        <motion.div
-                          layoutId="mobileActiveSection"
-                          className="absolute inset-0 rounded-lg bg-primary/50"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ duration: 0.3 }}
-                        />
+                        <FadeIn>
+                          <div
+                            className="absolute inset-0 rounded-lg bg-primary/50 transition-opacity duration-300"
+                            aria-hidden="true"
+                          />
+                        </FadeIn>
                       )}
                     </Link>
                   ))}

@@ -1,93 +1,10 @@
-'use client';
 import type { Data } from '#/types';
+import { FadeIn, PopIn, SlideIn, Stagger, StaggerItem } from '#/components/motion';
 import BackgroundPattern from '#/components/ui/background-pattern';
 import { StarRating } from '#/components/ui/star-rating';
 import { Avatar, AvatarFallback, AvatarImage } from 'components/ui/avatar';
 import { Card } from 'components/ui/card';
-import { motion } from 'framer-motion';
 import SectionContainer from './section-container';
-
-type CardVariants = {
-  readonly hidden: { readonly opacity: number; readonly y: number };
-  readonly visible: {
-    readonly opacity: number;
-    readonly y: number;
-    readonly transition: {
-      readonly type: string;
-      readonly stiffness: number;
-      readonly damping: number;
-    };
-  };
-};
-
-type AvatarVariants = {
-  readonly hidden: { readonly scale: number; readonly rotate: number };
-  readonly visible: {
-    readonly scale: number;
-    readonly rotate: number;
-    readonly transition: {
-      readonly type: string;
-      readonly stiffness: number;
-      readonly damping: number;
-      readonly delay: number;
-    };
-  };
-};
-
-type TextVariants = {
-  readonly hidden: { readonly opacity: number; readonly x: number };
-  readonly visible: {
-    readonly opacity: number;
-    readonly x: number;
-    readonly transition: {
-      readonly type: string;
-      readonly stiffness: number;
-      readonly damping: number;
-      readonly delay: number;
-    };
-  };
-};
-
-const cardVariants: CardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: 'spring',
-      stiffness: 100,
-      damping: 15,
-    },
-  },
-};
-
-const avatarVariants: AvatarVariants = {
-  hidden: { scale: 0, rotate: -180 },
-  visible: {
-    scale: 1,
-    rotate: 0,
-    transition: {
-      type: 'spring',
-      stiffness: 200,
-      damping: 20,
-      delay: 0.2,
-    },
-  },
-};
-
-const textVariants: TextVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      type: 'spring',
-      stiffness: 100,
-      damping: 15,
-      delay: 0.3,
-    },
-  },
-};
 
 type TestimonialSectionProps = {
   readonly testimonials: Data['testimonials'];
@@ -95,87 +12,67 @@ type TestimonialSectionProps = {
 
 export default function TestimonialSection({ testimonials }: TestimonialSectionProps) {
   return (
-    <SectionContainer id="clients" mainTitle="Trusted by Healthcare Professionals" titleChip="TESTIMONIALS" titleDescription="Our healthcare management solutions have helped thousands of medical practices improve their operations and patient care.">
-      <div className="relative mx-auto max-w-7xl">
-        <div className="relative z-10 mt-20">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {testimonials.map(testimonial => (
-              <motion.div
-                key={testimonial.id}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-100px' }}
-                variants={cardVariants}
-                whileHover={{ scale: 1.02, y: -5 }}
-                className="h-full"
-              >
-                <Card
-                  className="group relative bg-foreground/90 dark:bg-foreground/10 text-amber-50 border border-foreground  h-full overflow-hidden p-5"
-                >
-                  <BackgroundPattern />
-                  <div className="relative">
-                    <motion.div
-                      className="mb-6"
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.1 }}
-                    >
-                      <StarRating rating={testimonial.rating} />
-                    </motion.div>
-                    <motion.blockquote
-                      className="relative mb-8"
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      <div className="absolute -left-3 -top-3 text-6xl font-serif text-amber-50/40">"</div>
-                      <p className="relative text-base leading-relaxed ">
-                        {testimonial.content}
-                      </p>
-                    </motion.blockquote>
-                    <motion.footer
-                      className="mt-auto"
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true }}
-                      variants={textVariants}
-                    >
-                      <div className="flex items-center gap-4">
-                        <motion.div
-                          initial="hidden"
-                          whileInView="visible"
-                          viewport={{ once: true }}
-                          variants={avatarVariants}
-                          whileHover={{ scale: 1.1, rotate: 5 }}
-                        >
-                          <Avatar className="size-12 border">
-                            <AvatarImage src={`/avatars/${testimonial.author.toLowerCase().replace('dr. ', '')}.jpg`} />
-                            <AvatarFallback className="bg-primary/10 text-lg font-semibold ">
-                              {testimonial.author.split(' ').map(n => n[0]).join('')}
-                            </AvatarFallback>
-                          </Avatar>
-                        </motion.div>
-                        <motion.div
-                          initial="hidden"
-                          whileInView="visible"
-                          viewport={{ once: true }}
-                          variants={textVariants}
-                        >
-                          <cite className="not-italic">
-                            <p className="font-semibold ">{testimonial.author}</p>
-                          </cite>
-                        </motion.div>
-                      </div>
-                    </motion.footer>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
+    <SectionContainer
+      id="clients"
+      mainTitle="Trusted by Healthcare Professionals"
+      titleChip="TESTIMONIALS"
+      titleDescription="Our healthcare management solutions have helped thousands of medical practices improve their operations and patient care."
+    >
+      <FadeIn>
+        <div className="relative mx-auto max-w-7xl">
+          <div className="relative z-10 mt-20">
+            <Stagger>
+              <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                {testimonials.map(testimonial => (
+                  <StaggerItem key={testimonial.id}>
+                    <div className="h-full transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1">
+                      <Card className="group relative bg-foreground/90 dark:bg-foreground/10 text-amber-50 border border-foreground h-full overflow-hidden p-5">
+                        <BackgroundPattern />
+                        <div className="relative">
+                          <FadeIn delay={0.1}>
+                            <div className="mb-6">
+                              <StarRating rating={testimonial.rating} />
+                            </div>
+                          </FadeIn>
+                          <FadeIn delay={0.2}>
+                            <blockquote className="relative mb-8">
+                              <div className="absolute -left-3 -top-3 text-6xl font-serif text-amber-50/40">"</div>
+                              <p className="relative text-base leading-relaxed">
+                                {testimonial.content}
+                              </p>
+                            </blockquote>
+                          </FadeIn>
+                          <FadeIn delay={0.3}>
+                            <footer className="mt-auto">
+                              <div className="flex items-center gap-4">
+                                <PopIn delay={0.3}>
+                                  <div className="transition-transform duration-200 hover:scale-110">
+                                    <Avatar className="size-12 border">
+                                      <AvatarImage src={`/avatars/${testimonial.author.toLowerCase().replace('dr. ', '')}.jpg`} />
+                                      <AvatarFallback className="bg-primary/10 text-lg font-semibold">
+                                        {testimonial.author.split(' ').map(n => n[0]).join('')}
+                                      </AvatarFallback>
+                                    </Avatar>
+                                  </div>
+                                </PopIn>
+                                <SlideIn delay={0.4}>
+                                  <cite className="not-italic">
+                                    <p className="font-semibold">{testimonial.author}</p>
+                                  </cite>
+                                </SlideIn>
+                              </div>
+                            </footer>
+                          </FadeIn>
+                        </div>
+                      </Card>
+                    </div>
+                  </StaggerItem>
+                ))}
+              </div>
+            </Stagger>
           </div>
         </div>
-      </div>
+      </FadeIn>
     </SectionContainer>
   );
 }

@@ -12,9 +12,9 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-
   DropdownMenuTrigger,
 } from '#/components/ui/dropdown-menu';
+import { LinkWithStatus } from '#/components/ui/link-with-status';
 import { Logo } from '#/components/ui/logo';
 import {
   Sidebar,
@@ -23,7 +23,6 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarHeader,
-
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -34,16 +33,13 @@ import {
   useSidebar,
 } from '#/components/ui/sidebar';
 import { sidebarItems } from '#/constants/sidebar';
-
 import { supabaseClient } from '#/db/supabase/client';
 import { cn } from '#/lib/utils';
 import {
   ChevronRight,
   LogOut,
   UserIcon,
-
 } from 'lucide-react';
-import Link from 'next/link';
 import { redirect, usePathname } from 'next/navigation';
 import * as React from 'react';
 
@@ -125,7 +121,11 @@ export function AppSidebar({ user }: { user: User }) {
                                       isCollapsed ? 'justify-center' : 'justify-start',
                                     )}
                                   >
-                                    <Link href={subItem.url} className="flex items-center gap-2 w-full">
+                                    <LinkWithStatus
+                                      href={subItem.url}
+                                      className="flex items-center gap-2 w-full"
+                                      prefetch={false}
+                                    >
                                       {subItem.icon && (
                                         <subItem.icon className={cn(
                                           'h-4 w-4 shrink-0',
@@ -133,8 +133,12 @@ export function AppSidebar({ user }: { user: User }) {
                                         )}
                                         />
                                       )}
-                                      {!isCollapsed && <span className="truncate">{subItem.title}</span>}
-                                    </Link>
+                                      {!isCollapsed && (
+                                        <span className="truncate">
+                                          {subItem.title}
+                                        </span>
+                                      )}
+                                    </LinkWithStatus>
                                   </SidebarMenuSubButton>
                                 </SidebarMenuSubItem>
                               ))}
@@ -155,7 +159,11 @@ export function AppSidebar({ user }: { user: User }) {
                             isCollapsed ? 'justify-center' : 'justify-start',
                           )}
                         >
-                          <Link href={item.url} className="flex items-center gap-2 w-full">
+                          <LinkWithStatus
+                            href={item.url}
+                            className="flex items-center gap-2 w-full"
+                            prefetch={false}
+                          >
                             {item.icon && (
                               <item.icon className={cn(
                                 'h-4 w-4 shrink-0',
@@ -163,8 +171,12 @@ export function AppSidebar({ user }: { user: User }) {
                               )}
                               />
                             )}
-                            {!isCollapsed && <span className="truncate">{item.title}</span>}
-                          </Link>
+                            {!isCollapsed && (
+                              <span className="truncate">
+                                {item.title}
+                              </span>
+                            )}
+                          </LinkWithStatus>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     ),

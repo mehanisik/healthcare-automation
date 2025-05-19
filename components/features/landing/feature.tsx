@@ -1,8 +1,7 @@
 'use client';
 
 import type { Data } from '#/types';
-import { useSectionAnimation } from '#/components/ui/section-animation';
-import { motion } from 'framer-motion';
+import { FadeIn } from '#/components/motion';
 import SectionContainer from './section-container';
 
 type FeatureSectionProps = {
@@ -10,8 +9,6 @@ type FeatureSectionProps = {
 };
 
 export default function FeatureSection({ services }: FeatureSectionProps) {
-  const animation = useSectionAnimation();
-
   return (
     <SectionContainer
       id="services"
@@ -19,12 +16,12 @@ export default function FeatureSection({ services }: FeatureSectionProps) {
       mainTitle="Comprehensive Revenue Cycle Services"
       titleDescription="We empower healthcare organizations to drive performance, reduce administrative burden, and maximize revenue through end-to-end RCM solutions."
     >
-      <motion.div {...animation}>
-        <div className="relative">
-          <div className="grid space-y-6 lg:grid-cols-2 lg:space-y-0 lg:divide-x">
-            <div className="space-y-6 sm:px-16">
-              {services.slice(0, 3).map(service => (
-                <div className="flex flex-col max-w-md sm:flex-row" key={crypto.randomUUID()}>
+      <FadeIn className="relative">
+        <div className="grid space-y-6 lg:grid-cols-2 lg:space-y-0 lg:divide-x">
+          <div className="space-y-6 sm:px-16">
+            {services.slice(0, 3).map((service, index) => (
+              <FadeIn key={crypto.randomUUID()} delay={index * 0.1}>
+                <div className="flex flex-col max-w-md sm:flex-row">
                   <div className="mb-4 mr-4">
                     <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10">
                       <svg
@@ -47,11 +44,13 @@ export default function FeatureSection({ services }: FeatureSectionProps) {
                     <p className="text-sm text-muted-foreground">{service.description}</p>
                   </div>
                 </div>
-              ))}
-            </div>
-            <div className="space-y-6 sm:px-16">
-              {services.slice(3).map(service => (
-                <div className="flex flex-col max-w-md sm:flex-row" key={crypto.randomUUID()}>
+              </FadeIn>
+            ))}
+          </div>
+          <div className="space-y-6 sm:px-16">
+            {services.slice(3).map((service, index) => (
+              <FadeIn key={crypto.randomUUID()} delay={(index + 3) * 0.1}>
+                <div className="flex flex-col max-w-md sm:flex-row">
                   <div className="mb-4 mr-4">
                     <div className="flex items-center justify-center w-12 h-12 rounded-full bg-primary/10">
                       <svg
@@ -74,11 +73,11 @@ export default function FeatureSection({ services }: FeatureSectionProps) {
                     <p className="text-sm text-muted-foreground">{service.description}</p>
                   </div>
                 </div>
-              ))}
-            </div>
+              </FadeIn>
+            ))}
           </div>
         </div>
-      </motion.div>
+      </FadeIn>
     </SectionContainer>
   );
 }
