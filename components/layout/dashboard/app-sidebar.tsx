@@ -1,20 +1,8 @@
 'use client';
 import type { User } from '@supabase/supabase-js';
-import { Avatar, AvatarFallback, AvatarImage } from '#/components/ui/avatar';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '#/components/ui/collapsible';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '#/components/ui/dropdown-menu';
-import { LinkWithStatus } from '#/components/ui/link-with-status';
+import { logOutFn } from '#/actions/auth/logout';
+import { Button } from '#/components/ui/button';
+import LinkWithLoader from '#/components/ui/link-with-loader';
 import { Logo } from '#/components/ui/logo';
 import {
   Sidebar,
@@ -26,21 +14,17 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   SidebarRail,
   useSidebar,
 } from '#/components/ui/sidebar';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '#/components/ui/tooltip';
 import { sidebarItems } from '#/constants/sidebar';
-import { supabaseClient } from '#/db/supabase/client';
 import { cn } from '#/lib/utils';
 import {
-  ChevronRight,
+  Loader2,
   LogOut,
-  UserIcon,
 } from 'lucide-react';
-import { redirect, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import * as React from 'react';
 
 export function AppSidebar({ user }: { user: User }) {
@@ -48,25 +32,12 @@ export function AppSidebar({ user }: { user: User }) {
   const { state } = useSidebar();
   const isCollapsed = state === 'collapsed';
 
-  const handleLogout = async () => {
-    await supabaseClient.auth.signOut();
-    redirect('/auth');
-  };
   return (
-
     <Sidebar collapsible="icon">
-      <SidebarHeader>
-        <div className="p-2 flex items-center gap-2">
-          {!isCollapsed
-            ? (
-                <Logo type="text" width={100} height={30} />
-              )
-            : (
-                <Logo type="icon" width={32} height={32} />
-              )}
-        </div>
+      <SidebarHeader className="p-2">
+        <Logo type={isCollapsed ? 'icon' : 'text'} width={isCollapsed ? 32 : 100} height={isCollapsed ? 32 : 30} />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="overflow-x-hidden">
         {sidebarItems.map(group => (
           <SidebarGroup key={group.id} className="mb-6 last:mb-0">
             {group.label && !isCollapsed && (
@@ -76,149 +47,53 @@ export function AppSidebar({ user }: { user: User }) {
             )}
             <SidebarMenu className="space-y-1">
               {group.items.map(item =>
-                'subItems' in item && Array.isArray(item.subItems) && item.subItems.length > 0
-                  ? (
-                      <Collapsible
-                        key={item.title}
-                        asChild
-                        defaultOpen={pathname.startsWith(item.url)}
-                        className="group/collapsible"
+                (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      tooltip={item.title}
+                      isActive={pathname === item.url}
+                      className="px-3 py-2 rounded-md transition-colors duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                    >
+                      <LinkWithLoader
+                        className={cn(
+                          'w-full flex items-center transition-all duration-200 relative',
+                          isCollapsed ? 'justify-center' : 'justify-start gap-2',
+                        )}
+                        href={item.url}
+                        loader={<Loader2 className="size-4 animate-spin absolute right-2" />}
                       >
-                        <SidebarMenuItem>
-                          <CollapsibleTrigger asChild>
-                            <SidebarMenuButton
-                              tooltip={item.title}
-                              isActive={pathname.startsWith(item.url)}
-                              className={cn(
-                                'w-full flex items-center gap-2 px-3 py-2 rounded-md transition-colors duration-200',
-                                'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
-                                isCollapsed ? 'justify-center' : 'justify-between',
-                              )}
-                            >
-                              {item.icon && (
-                                <item.icon className={cn(
-                                  'h-4 w-4 shrink-0',
-                                  isCollapsed ? 'mx-auto' : 'mr-2',
-                                )}
-                                />
-                              )}
-                              {!isCollapsed && <span className="truncate">{item.title}</span>}
-                              {!isCollapsed && (
-                                <ChevronRight className="ml-auto h-4 w-4 shrink-0 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                              )}
-                            </SidebarMenuButton>
-                          </CollapsibleTrigger>
-                          <CollapsibleContent>
-                            <SidebarMenuSub className="mt-1 space-y-1">
-                              {Array.isArray(item.subItems) && item.subItems.map(subItem => (
-                                <SidebarMenuSubItem key={subItem.title}>
-                                  <SidebarMenuSubButton
-                                    asChild
-                                    isActive={pathname === subItem.url}
-                                    className={cn(
-                                      'w-full flex items-center gap-2 px-3 py-2 rounded-md transition-colors duration-200',
-                                      'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
-                                      isCollapsed ? 'justify-center' : 'justify-start',
-                                    )}
-                                  >
-                                    <LinkWithStatus
-                                      href={subItem.url}
-                                      className="flex items-center gap-2 w-full"
-                                      prefetch={false}
-                                    >
-                                      {subItem.icon && (
-                                        <subItem.icon className={cn(
-                                          'h-4 w-4 shrink-0',
-                                          isCollapsed ? 'mx-auto' : 'mr-2',
-                                        )}
-                                        />
-                                      )}
-                                      {!isCollapsed && (
-                                        <span className="truncate">
-                                          {subItem.title}
-                                        </span>
-                                      )}
-                                    </LinkWithStatus>
-                                  </SidebarMenuSubButton>
-                                </SidebarMenuSubItem>
-                              ))}
-                            </SidebarMenuSub>
-                          </CollapsibleContent>
-                        </SidebarMenuItem>
-                      </Collapsible>
-                    )
-                  : (
-                      <SidebarMenuItem key={item.title}>
-                        <SidebarMenuButton
-                          asChild
-                          tooltip={item.title}
-                          isActive={pathname === item.url}
-                          className={cn(
-                            'w-full flex items-center gap-2 px-3 py-2 rounded-md transition-colors duration-200',
-                            'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
-                            isCollapsed ? 'justify-center' : 'justify-start',
-                          )}
-                        >
-                          <LinkWithStatus
-                            href={item.url}
-                            className="flex items-center gap-2 w-full"
-                            prefetch={false}
-                          >
-                            {item.icon && (
-                              <item.icon className={cn(
-                                'h-4 w-4 shrink-0',
-                                isCollapsed ? 'mx-auto' : 'mr-2',
-                              )}
-                              />
-                            )}
-                            {!isCollapsed && (
-                              <span className="truncate">
-                                {item.title}
-                              </span>
-                            )}
-                          </LinkWithStatus>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ),
+                        {item.icon && (
+                          <item.icon className="h-4 w-4" />
+                        )}
+                        {!isCollapsed && (
+                          <span className="truncate">{item.title}</span>
+                        )}
+                      </LinkWithLoader>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ),
               )}
             </SidebarMenu>
           </SidebarGroup>
         ))}
       </SidebarContent>
       <SidebarFooter className="p-2 border-t border-border">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Avatar className="cursor-pointer hover:opacity-80 transition-opacity ring-1 ring-border">
-              <AvatarImage src={user.user_metadata?.avatar_url} />
-              <AvatarFallback className="bg-sidebar-accent text-sidebar-accent-foreground">
-                {user.user_metadata?.name
-                  ? user.user_metadata.name.split(' ').map((n: string) => n[0]).join('')
-                  : user.email?.slice(0, 2).toUpperCase() || 'U'}
-              </AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            align="end"
-            className="w-56 bg-popover text-popover-foreground border-border"
-            sideOffset={8}
-          >
-            <DropdownMenuLabel className="text-muted-foreground font-normal">
-              {user.user_metadata?.name || user.email || 'User'}
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator className="bg-border" />
-            <DropdownMenuItem className="focus:bg-accent focus:text-accent-foreground cursor-pointer">
-              <UserIcon className="mr-2 h-4 w-4 text-muted-foreground" />
-              <span>Profile</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={handleLogout}
-              className="text-destructive focus:text-destructive focus:bg-destructive/10 cursor-pointer"
-            >
-              <LogOut className="mr-2 h-4 w-4" />
-              <span>Log out</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className={cn('w-full p-2 rounded-lg flex items-center justify-between transition-all duration-200', isCollapsed && ' flex-col-reverse')}>
+          <p className={cn('text-sm', isCollapsed && 'hidden')}>
+            {user.email}
+          </p>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon" onClick={logOutFn}>
+                  <LogOut className="size-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Log out</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

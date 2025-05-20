@@ -1,39 +1,123 @@
 'use client';
 
+import {
+  ComponentProps,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import Link from 'next/link';
-import { useLinkStatus } from 'next/link';
-import { type ComponentProps } from 'react';
-import { cn } from '#/lib/utils';
+import { usePathname } from 'next/navigation';
+import clsx from 'clsx/lite';
 
-type LinkWithStatusProps = ComponentProps<typeof Link> & {
-  children: React.ReactNode;
-  showLoading?: boolean;
-};
+const FLICKER_THRESHOLD = 400;
+const MAX_LOADING_DURATION = 15_000;
 
-export function LinkWithStatus({ 
-  children, 
-  showLoading = true, 
+export type LinkWithStatusProps = Omit<
+  ComponentProps<typeof Link>, 'children'
+> & {
+  loadingClassName?: string
+  children: ReactNode | ((props: {
+    isLoading: boolean
+  }) => ReactNode)
+  debugLoading?: boolean
+}
+
+export  function LinkWithStatus({
+  loadingClassName,
+  href, 
   className,
-  ...props 
+  onClick,
+  children,
+  debugLoading = false,
+  ...props
 }: LinkWithStatusProps) {
-  const { pending } = useLinkStatus();
+  const path = usePathname();
 
-  return (
-    <Link 
-      className={cn(
-        "relative inline-flex items-center gap-2",
-        className
-      )} 
-      {...props}
-    >
-      {children}
-      {showLoading && pending && (
-        <div 
-          role="status" 
-          aria-label="Loading" 
-          className="inline-block size-3 border-[1.5px] border-current border-r-transparent rounded-full animate-spin opacity-50"
-        />
-      )}
-    </Link>
-  );
-} 
+  const [pathWhenClicked, setPathWhenClicked] = useState<string>();
+  const [_isLoading, setIsLoading] = useState(false);
+  const isLoading = _isLoading || debugLoading;
+  
+  const isLoadingStartTime = useRef<number | undefined>(undefined);
+
+  const startLoadingTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
+  const stopLoadingTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
+  const maxLoadingTimeout = useRef<NodeJS.Timeout | undefined>(undefined);
+
+  const isControlled = typeof children === 'function';
+
+  const clearTimeouts = useCallback(() => {
+    [startLoadingTimeout, stopLoadingTimeout, maxLoadingTimeout]
+      .forEach(timeout => {
+        if (timeout.current) { clearTimeout(timeout.current); }
+      });
+  }, []);
+
+  const stopLoading = useCallback(() => {
+    setIsLoading(false);
+    setPathWhenClicked(undefined);
+  }, []);
+
+  const isVisitingLinkHref = path === href;
+
+  const shouldCancelLoading =
+    (pathWhenClicked && pathWhenClicked !== path) ||
+    isVisitingLinkHref;
+
+  useEffect(() => {
+    if (shouldCancelLoading) {
+      clearTimeouts();
+      const loadingDuration = isLoadingStartTime.current
+        ? Date.now() - isLoadingStartTime.current
+        : 0;
+
+      if (loadingDuration < FLICKER_THRESHOLD) {
+        stopLoadingTimeout.current = setTimeout(
+          stopLoading,
+          FLICKER_THRESHOLD - loadingDuration,
+        );
+      } else {
+        stopLoading();
+      }
+    }
+  }, [shouldCancelLoading, clearTimeouts, stopLoading]);
+
+  useEffect(() => () => clearTimeouts(), [clearTimeouts]);
+
+  return <Link
+    {...props}
+    href={href}
+    className={clsx(
+      'transition-[colors,opacity]',
+      (loadingClassName || isControlled)
+        ? 'opacity-100'
+        : isLoading ? 'opacity-50' : 'opacity-100',
+      className,
+      isLoading && loadingClassName,
+    )}
+    onClick={e => {
+      const isOpeningNewTab = e.metaKey || e.ctrlKey;
+      if (!isVisitingLinkHref && !isOpeningNewTab) {
+        setPathWhenClicked(path);
+        startLoadingTimeout.current = setTimeout(
+          () => {
+            isLoadingStartTime.current = Date.now();
+            setIsLoading(true);
+          },
+          FLICKER_THRESHOLD,
+        );
+        maxLoadingTimeout.current = setTimeout(
+          stopLoading,
+          MAX_LOADING_DURATION,
+        );
+      }
+      onClick?.(e);
+    }}
+  >
+    {typeof children === 'function'
+      ? children({ isLoading })
+      : children}
+  </Link>;
+}
