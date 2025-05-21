@@ -1,4 +1,4 @@
-import type { Data } from '#/types';
+import type { HeroSectionProps } from '#/types/landing';
 import { FadeIn, SlideIn } from '#/components/motion';
 import BackgroundPattern from '#/components/ui/background-pattern';
 import { Button } from '#/components/ui/button';
@@ -7,10 +7,6 @@ import { Award, MapPin, Phone, Users } from 'lucide-react';
 import Image from 'next/image';
 import * as React from 'react';
 import SectionContainer from './section-container';
-
-type HeroSectionProps = {
-  readonly companyInfo: Data['companyInfo'];
-};
 
 export default function HeroSection({ companyInfo }: HeroSectionProps) {
   return (

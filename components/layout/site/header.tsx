@@ -1,6 +1,6 @@
 'use client';
 
-import { logOutFn } from '#/actions/auth';
+import { logOutFn } from '#/actions/logout';
 import { AuthContext } from '#/components/providers/auth-provider';
 import { ThemeToggle } from '#/components/providers/theme-toggle';
 import { Button } from '#/components/ui/button';

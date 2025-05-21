@@ -8,17 +8,12 @@ import { Calendar } from './calendar';
 import { Card } from './card';
 import { Input } from './input';
 
-/**
- * Represents a time slot for an appointment
- */
 type TimeSlot = {
   readonly start: Date;
   readonly end: Date;
 };
 
-/**
- * Represents the company's working hours
- */
+
 type CompanyHours = {
   readonly start: number;
   readonly end: number;

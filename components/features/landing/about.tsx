@@ -1,18 +1,9 @@
+import type { AboutSectionProps } from '#/types/landing';
 import SectionContainer from '#/components/features/landing/section-container';
 import { FadeIn } from '#/components/motion';
 import BackgroundPattern from '#/components/ui/background-pattern';
 import { CheckCircle } from 'lucide-react';
 import React from 'react';
-
-type TeamMember = {
-  name: string;
-  role: string;
-  description: string;
-};
-
-type AboutSectionProps = {
-  readonly team: TeamMember[];
-};
 
 export default function AboutSection({ team }: AboutSectionProps) {
   return (
