@@ -1,14 +1,8 @@
-'use client';
-
-import type { Data } from '#/types';
+import type { SolutionsShowcaseProps } from '#/types/landing';
 import { FadeIn } from '#/components/motion';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '#/components/ui/carousel';
 import Image from 'next/image';
 import SectionContainer from './section-container';
-
-type SolutionsShowcaseProps = {
-  readonly solutions: Data['solutions'];
-};
 
 export default function SolutionsShowcase({ solutions }: SolutionsShowcaseProps) {
   return (

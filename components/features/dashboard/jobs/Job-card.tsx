@@ -1,45 +1,11 @@
-import { randomUUID } from 'node:crypto';
+import type { Job } from '#/types/jobs';
 import { Badge } from '#/components/ui/badge';
 import { Button } from '#/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '#/components/ui/card';
 import { jobStatusIconColor } from '#/components/utilities/statusColors';
-import { AlertCircle, CheckCircle2, Clock, FileText, PlayCircle, RefreshCw } from 'lucide-react';
+import { statusConfig, triggerConfig } from '#/constants/jobs';
+import { AlertCircle, FileText, PlayCircle, RefreshCw } from 'lucide-react';
 import React from 'react';
-
-export type JobRun = {
-  status: 'running' | 'completed' | 'failed';
-  time: string;
-  duration: string;
-};
-
-export type Job = {
-  id: number;
-  name: string;
-  status: 'running' | 'completed' | 'scheduled' | 'failed';
-  progress: number;
-  startTime: string;
-  estimatedEnd: string;
-  bot: string;
-  lastRun: string;
-  nextRun: string;
-  trigger: 'manual' | 'scheduled' | 'event';
-  duration: string;
-  errorMessage?: string;
-  history: JobRun[];
-};
-
-export const statusConfig = {
-  running: { icon: PlayCircle, variant: 'default', text: 'Running' },
-  completed: { icon: CheckCircle2, variant: 'secondary', text: 'Completed' },
-  scheduled: { icon: Clock, variant: 'outline', text: 'Scheduled' },
-  failed: { icon: AlertCircle, variant: 'destructive', text: 'Failed' },
-} as const;
-
-const triggerConfig = {
-  manual: { badge: 'bg-muted text-muted-foreground', text: 'Manual' },
-  scheduled: { badge: 'bg-primary/10 text-primary-foreground', text: 'Scheduled' },
-  event: { badge: 'bg-accent/10 text-accent-foreground', text: 'Event' },
-};
 
 type JobCardProps = {
   job: Job;
@@ -138,7 +104,7 @@ export function JobCard({ job }: JobCardProps) {
                 const runStatus = statusConfig[run.status];
                 const RunIcon = runStatus.icon;
                 return (
-                  <li key={randomUUID()} className="flex items-center gap-2 text-xs">
+                  <li key={crypto.randomUUID()} className="flex items-center gap-2 text-xs">
                     <Badge variant={runStatus.variant} className="flex items-center gap-1">
                       <RunIcon className={`h-3 w-3 ${jobStatusIconColor[run.status]}`} />
                       <span>{run.status.charAt(0).toUpperCase() + run.status.slice(1)}</span>

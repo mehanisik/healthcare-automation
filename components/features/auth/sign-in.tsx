@@ -1,4 +1,4 @@
-import { loginFn } from '#/actions/auth/login';
+import { loginFn } from '#/actions/login';
 import BackgroundPattern from '#/components/ui/background-pattern';
 import { Button } from '#/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '#/components/ui/card';
@@ -16,11 +16,10 @@ export default async function SignIn() {
             src="/practice-management.jpg"
             alt="Healthcare Practice Management"
             fill
-            className="object-cover brightness-[0.85] dark:brightness-[0.65]"
+            className="object-cover"
             priority
             quality={100}
           />
-          <div className="absolute inset-0 bg-background/50 dark:bg-background/70 backdrop-blur-[2px]" />
         </div>
         <div className="relative z-20 flex items-center text-lg font-medium text-foreground">
           <div className="mr-2">
@@ -28,32 +27,24 @@ export default async function SignIn() {
           </div>
           <span className="text-foreground">Healthcare Automation</span>
         </div>
-        <div className="relative z-20 mt-auto">
-          <blockquote className="space-y-2">
-            <p className="text-lg font-medium text-foreground">
-              "Streamline your healthcare practice with our comprehensive management solution"
-            </p>
-            <footer className="text-sm text-muted-foreground">
-              Transform your healthcare operations
-            </footer>
-          </blockquote>
-        </div>
+
       </div>
       <div className="lg:p-8 w-full h-full flex items-center justify-center relative">
         <div className="absolute inset-0 ">
           <BackgroundPattern />
         </div>
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px] relative z-10">
-          <div className="flex flex-col space-y-2 text-center">
-            <div className="mx-auto">
-              <Logo type="icon" width={48} height={48} />
-            </div>
-            <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-              Welcome back
-            </h1>
-          </div>
+
           <Card className="border-primary bg-card text-card-foreground shadow-2xl">
             <CardHeader>
+              <div className="flex flex-col space-y-2 text-center">
+                <div className="mx-auto">
+                  <Logo type="text" width={100} height={100} />
+                </div>
+                <h1 className="text-2xl font-semibold tracking-tight text-foreground">
+                  Welcome back
+                </h1>
+              </div>
               <CardTitle className="text-foreground text-center">Sign in</CardTitle>
             </CardHeader>
             <form action={loginFn}>
@@ -77,6 +68,7 @@ export default async function SignIn() {
                     name="password"
                     type="password"
                     required
+                    placeholder="********"
                     autoComplete="current-password"
                     className="bg-background border-input"
                   />

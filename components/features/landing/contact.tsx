@@ -1,4 +1,5 @@
-import type { Data } from '#/types';
+import type { ContactSectionProps } from '#/types/landing';
+import { sendContactMessageFn } from '#/actions/contact-message';
 import AppointmentCalendar from '#/components/ui/appointment-calendar';
 import { Button } from 'components/ui/button';
 import { Card, CardContent } from 'components/ui/card';
@@ -12,38 +13,9 @@ import {
   SelectValue,
 } from 'components/ui/select';
 import { Textarea } from 'components/ui/textarea';
-import { revalidatePath } from 'next/cache';
-import { toast } from 'sonner';
 import SectionContainer from './section-container';
 
-async function submitContactForm(formData: FormData) {
-  'use server';
-
-  const _rawFormData = {
-    firstName: formData.get('firstName'),
-    lastName: formData.get('lastName'),
-    email: formData.get('email'),
-    phone: formData.get('phone'),
-    inquiry: formData.get('inquiry'),
-    message: formData.get('message'),
-  };
-
-  try {
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    toast.success(`Contact form submitted successfully ${JSON.stringify(_rawFormData)}`);
-
-    revalidatePath('/');
-  } catch (error) {
-    if (error instanceof Error) {
-      toast.error(`Failed to submit contact form: ${error.message}`);
-    } else {
-      toast.error('Failed to submit contact form');
-    }
-    revalidatePath('/');
-  }
-}
-
-export default function ContactSection({ inquiryOptions }: { readonly inquiryOptions: Data['inquiryOptions'] }) {
+export default function ContactSection({ inquiryOptions }: ContactSectionProps) {
   return (
     <SectionContainer
       id="contact"
@@ -55,7 +27,7 @@ export default function ContactSection({ inquiryOptions }: { readonly inquiryOpt
         <div className="w-full lg:w-1/2">
           <Card className="flex-1 w-full max-w-5xl mx-auto border-border bg-card/50 rounded-3xl shadow-sm overflow-hidden h-full flex flex-col">
             <CardContent className="p-4 sm:p-6 md:p-8 flex-1 flex flex-col justify-between">
-              <form action={submitContactForm} className="space-y-4 flex-1 flex flex-col justify-between">
+              <form action={sendContactMessageFn} className="space-y-4 flex-1 flex flex-col justify-between">
                 <div className="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="firstName" className="text-base text-card-foreground">

@@ -1,5 +1,5 @@
 'use client';
-import type { Job } from './Job-card';
+import type { Job } from '#/types/jobs';
 import { Badge } from '#/components/ui/badge';
 import { Button } from '#/components/ui/button';
 import {
@@ -10,10 +10,10 @@ import {
 } from '#/components/ui/dropdown-menu';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '#/components/ui/tooltip';
 import { jobStatusIconColor } from '#/components/utilities/statusColors';
+import { statusConfig, triggerConfig } from '#/constants/jobs';
 import { CalendarClock, FileText, Info, MoreVertical, PlayCircle, Plus, RefreshCw, Repeat, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { statusConfig } from './Job-card';
 import { JobDialog } from './Job-dialog';
 
 function CreateJobDialog({ open, onClose, onCreate }: { open: boolean; onClose: () => void; onCreate: (job: Job) => void }) {
@@ -136,12 +136,6 @@ function ConfirmDeleteDialog({ open, onClose, onDelete }: { open: boolean; onClo
     </div>
   );
 }
-
-const triggerConfig = {
-  manual: { badge: 'bg-muted text-muted-foreground', text: 'Manual' },
-  scheduled: { badge: 'bg-primary/10 text-primary-foreground', text: 'Scheduled' },
-  event: { badge: 'bg-accent/10 text-accent-foreground', text: 'Event' },
-};
 
 export function JobsTable({ jobs: initialJobs }: { jobs: Job[] }) {
   const [jobs, setJobs] = useState<Job[]>(initialJobs);

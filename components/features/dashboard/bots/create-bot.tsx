@@ -1,7 +1,7 @@
 'use client';
 
-import type { Bot, BotCategory, BotPriority } from './types';
-import { createBotFn } from '#/actions/bots/create-bot';
+import type { Bot, BotCategory, BotPriority } from '#/types/bots';
+import { createBotFn } from '#/actions/create-bot';
 import { Button } from '#/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '#/components/ui/dialog';
 import { Input } from '#/components/ui/input';

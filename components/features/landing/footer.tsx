@@ -1,15 +1,10 @@
-import type { Data } from '#/types';
+import type { FooterSectionProps } from '#/types/landing';
 import { Logo } from '#/components/ui/logo';
 import Link from 'next/link';
 
-type FooterSectionProps = {
-  readonly footerLinks: Data['footerLinks'];
-  readonly officeInfo: Data['companyInfo'];
-};
-
 export default function FooterSection({ footerLinks, officeInfo }: FooterSectionProps) {
   return (
-    <footer className="bg-secondary text-white pt-16 dark:bg-[#121212] dark:border-t dark:border-border">
+    <footer className="pt-16  dark:border-t dark:border-border bg-secondary     text-white">
       <div className="mx-auto max-w-6xl px-4">
         <div className="grid gap-12 md:grid-cols-4">
           <div className="md:col-span-1">

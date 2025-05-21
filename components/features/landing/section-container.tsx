@@ -1,16 +1,6 @@
+import type { SectionContainerProps } from '#/types/landing';
 import { cn } from '#/lib/utils';
 import React from 'react';
-
-type SectionContainerProps = {
-  readonly id?: string;
-  readonly ref?: React.RefObject<HTMLDivElement>;
-  readonly className?: string;
-  readonly titleChip?: string;
-  readonly mainTitle?: string;
-  readonly titleDescription?: string;
-  readonly children: React.ReactNode;
-  readonly secondaryClassName?: string;
-};
 
 const SectionContainer: React.FC<SectionContainerProps> = ({
   id,

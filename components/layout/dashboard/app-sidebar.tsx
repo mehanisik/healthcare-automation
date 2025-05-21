@@ -1,6 +1,5 @@
 'use client';
-import type { User } from '@supabase/supabase-js';
-import { logOutFn } from '#/actions/auth/logout';
+import { logOutFn } from '#/actions/logout';
 import { Button } from '#/components/ui/button';
 import LinkWithLoader from '#/components/ui/link-with-loader';
 import { Logo } from '#/components/ui/logo';
@@ -27,7 +26,7 @@ import {
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
 
-export function AppSidebar({ user }: { user: User }) {
+export function AppSidebar() {
   const pathname = usePathname();
   const { state } = useSidebar();
   const isCollapsed = state === 'collapsed';
@@ -81,7 +80,7 @@ export function AppSidebar({ user }: { user: User }) {
       <SidebarFooter className="p-2 border-t border-border">
         <div className={cn('w-full p-2 rounded-lg flex items-center justify-between transition-all duration-200', isCollapsed && ' flex-col-reverse')}>
           <p className={cn('text-sm', isCollapsed && 'hidden')}>
-            {user.email}
+            john.doe@example.com
           </p>
           <TooltipProvider>
             <Tooltip>

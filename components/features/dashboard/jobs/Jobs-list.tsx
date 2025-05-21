@@ -1,12 +1,8 @@
-import type { Job } from './Job-card';
+import type { Job } from '#/types/jobs';
 import React from 'react';
 import { JobCard } from './Job-card';
 
-type JobsListProps = {
-  jobs: Job[];
-};
-
-export function JobsList({ jobs }: JobsListProps) {
+export function JobsList({ jobs }: { jobs: Job[] }) {
   return (
     <div className="space-y-4">
       {jobs.map(job => (

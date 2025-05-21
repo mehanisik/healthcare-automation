@@ -1,5 +1,5 @@
 import Header from '#/components/layout/site/header';
-import data from '#/data.json';
+import { landingPageData } from '#/lib/landing-page.data';
 import AboutSection from './about';
 import ContactSection from './contact';
 import FeaturesSection from './feature';
@@ -13,13 +13,13 @@ export default function Main() {
     <>
       <Header />
       <main className="flex flex-col gap-16 w-full" aria-label="Main content">
-        <HeroSection companyInfo={data.companyInfo} />
-        <FeaturesSection services={data.services} />
-        <SolutionSection solutions={data.solutions} />
-        <AboutSection team={data.team} />
-        <TestimonialSection testimonials={data.testimonials} />
-        <ContactSection inquiryOptions={data.inquiryOptions} />
-        <FooterSection footerLinks={data.footerLinks} officeInfo={data.companyInfo} />
+        <HeroSection companyInfo={landingPageData.companyInfo} />
+        <FeaturesSection services={landingPageData.services} />
+        <SolutionSection solutions={landingPageData.solutions} />
+        <AboutSection team={landingPageData.team} />
+        <TestimonialSection testimonials={landingPageData.testimonials} />
+        <ContactSection inquiryOptions={landingPageData.inquiryOptions} />
+        <FooterSection footerLinks={landingPageData.footerLinks} officeInfo={landingPageData.companyInfo} />
       </main>
     </>
   );

@@ -1,10 +1,9 @@
-import type { Job } from './Job-card';
-import { randomUUID } from 'node:crypto';
+import type { Job } from '#/types/jobs';
 import { Badge } from '#/components/ui/badge';
 import { Button } from '#/components/ui/button';
 import { jobStatusIconColor } from '#/components/utilities/statusColors';
+import { statusConfig } from '#/constants/jobs';
 import { CalendarClock, PlayCircle, Repeat, Trash2 } from 'lucide-react';
-import { statusConfig } from './Job-card';
 
 export const DashboardJob = ({ job }: { job: Job }) => {
   const status = statusConfig[job.status];
@@ -82,7 +81,7 @@ export const DashboardJob = ({ job }: { job: Job }) => {
               const runStatus = statusConfig[run.status];
               const RunIcon = runStatus.icon;
               return (
-                <tr key={randomUUID()}>
+                <tr key={crypto.randomUUID()}>
                   <td className="px-2 py-1">
                     <Badge variant={runStatus.variant} className="flex items-center gap-1">
                       <RunIcon className={`h-3 w-3 ${jobStatusIconColor ? jobStatusIconColor[run.status] : ''}`} />

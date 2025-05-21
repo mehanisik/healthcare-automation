@@ -1,6 +1,6 @@
 'use server';
-import type { Bot } from '#/components/features/dashboard/bots/types';
-import { createClient } from '#/db/supabase/server';
+import type { Bot } from '#/types/bots';
+import { createClient } from '#/lib/supabase/server';
 
 export async function createBotFn(bot: Bot) {
   try {
@@ -11,6 +11,6 @@ export async function createBotFn(bot: Bot) {
     }
     return data;
   } catch (error) {
-    throw new Error(error instanceof Error ? error.message : 'An error occurred during createBot');
+    throw new Error(error instanceof Error ? error.message : 'An error occurred during creating a new bot');
   }
 }

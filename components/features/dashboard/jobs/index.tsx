@@ -1,4 +1,4 @@
-import type { Job } from './Job-card';
+import type { Job } from '#/types/jobs';
 import { JobsTable } from './Jobs-table';
 
 export const DashboardJobs = async ({ jobs }: { jobs: Job[] }) => {

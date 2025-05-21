@@ -1,14 +1,10 @@
-import type { Data } from '#/types';
+import type { TestimonialSectionProps } from '#/types/landing';
 import { FadeIn, PopIn, SlideIn, Stagger, StaggerItem } from '#/components/motion';
 import BackgroundPattern from '#/components/ui/background-pattern';
 import { StarRating } from '#/components/ui/star-rating';
 import { Avatar, AvatarFallback, AvatarImage } from 'components/ui/avatar';
 import { Card } from 'components/ui/card';
 import SectionContainer from './section-container';
-
-type TestimonialSectionProps = {
-  readonly testimonials: Data['testimonials'];
-};
 
 export default function TestimonialSection({ testimonials }: TestimonialSectionProps) {
   return (

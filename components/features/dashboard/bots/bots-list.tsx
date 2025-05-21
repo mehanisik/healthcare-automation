@@ -1,6 +1,5 @@
 'use client';
-import type { Bot, BotCategory } from './types';
-
+import type { Bot, BotCategory } from '#/types/bots';
 import { Badge } from '#/components/ui/badge';
 import { Button } from '#/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '#/components/ui/card';
@@ -8,8 +7,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '#/components/u
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '#/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '#/components/ui/tabs';
 import { botStatusColor, categoryColor, priorityColor } from '#/components/utilities/statusColors';
+import { categoryConfig, priorityConfig, statusConfig } from '#/constants/bots';
 import { useState } from 'react';
-import { categoryConfig, priorityConfig, statusConfig } from './config';
 import { CreateBot } from './create-bot';
 
 export function BotsList({ bots }: { bots: Bot[] }) {

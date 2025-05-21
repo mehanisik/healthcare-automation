@@ -1,4 +1,4 @@
-import { getJobsFn } from '#/actions/jobs/get-jobs';
+import { getJobsFn } from '#/actions/get-jobs';
 import { DashboardJobs } from '#/components/features/dashboard/jobs';
 
 export default async function JobsPage() {
